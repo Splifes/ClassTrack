@@ -5,6 +5,8 @@ Este repositorio está diseñado para una competencia donde NO se permite inclui
 - Objetivo: explicar la arquitectura, flujos y contratos sin código.
 - Cumplimiento: no contiene `*.ts`, `*.tsx`, `*.js`, `package.json` válido, ni configuraciones ejecutables.
 
+> Fuente canónica: ver `README02.md` (consignas y guía principal). El archivo `README.md` en la raíz enlaza a `README02.md` y al índice de prompts (`prompts/INDEX_BY_CATEGORY.md`).
+
 ## Vista general de carpetas
 
 - `docs/`: Documentación funcional, de diseño y cronograma. Agregamos `docs/config/` para detallar configuraciones planeadas (Vite, TS, Bootstrap 5, backend Flask, etc.).

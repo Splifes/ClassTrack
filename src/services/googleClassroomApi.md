@@ -25,6 +25,42 @@ class ClassroomApiService {
 - `getStudentSubmissions(courseId, courseWorkId)`: `GET ${VITE_BACKEND_URL}/api/courses/:courseId/courseWork/:workId/submissions`
 - `getCompleteCourseData(courseId)`: Composición de las llamadas anteriores
 
+### Contratos por método (documental)
+
+- `getCourses()`
+  - Endpoint: `GET /api/courses`
+  - Params: `pageSize?`, `pageToken?`
+  - Status: `200`
+  - Respuesta: `{ courses: Course[], nextPageToken?: string }`
+
+- `getCourse(courseId)` (opcional si hay endpoint de detalle)
+  - Endpoint: `GET /api/courses/{courseId}`
+  - Params: `courseId`
+  - Status: `200 | 404`
+  - Respuesta: `Course`
+
+- `getCourseStudents(courseId)`
+  - Endpoint: `GET /api/courses/{courseId}/students`
+  - Params: `courseId`, `pageToken?`
+  - Status: `200`
+  - Respuesta: `{ students: StudentProfile[], nextPageToken?: string }`
+
+- `getCourseWork(courseId)`
+  - Endpoint: `GET /api/courses/{courseId}/courseWork`
+  - Params: `courseId`, `pageToken?`
+  - Status: `200`
+  - Respuesta: `{ courseWork: CourseWork[], nextPageToken?: string }`
+
+- `getStudentSubmissions(courseId, courseWorkId)`
+  - Endpoint: `GET /api/courses/{courseId}/courseWork/{courseWorkId}/submissions`
+  - Params: `courseId`, `courseWorkId`, `pageToken?`
+  - Status: `200`
+  - Respuesta: `{ studentSubmissions: Submission[], nextPageToken?: string }`
+
+- `getCompleteCourseData(courseId)`
+  - Composición: `getCourse(courseId)` + `getCourseWork(courseId)` + `getCourseStudents(courseId)` + `getStudentSubmissions(...)` por cada work.
+  - Salida (documental): `{ course, courseWork, students, submissionsByWorkId }`
+
 ## Configuración API (frontend)
 - **Base URL frontend**: `${import.meta.env.VITE_BACKEND_URL}`
 - **Timeout**: 10 segundos

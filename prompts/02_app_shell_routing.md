@@ -1,18 +1,28 @@
 # Prompt 02 — App Shell & Routing
 
-Objetivo: implementar el esqueleto de la app con React Router y layout base.
+Objetivo: implementar el esqueleto de la app con React Router y layout base (documental, MD-only).
 
 Instrucciones
-- Añade React Router DOM.
-- Archivos:
-  - `src/routes/index.tsx` con rutas: `/`, `/students`, `/courses`.
-  - Incluir ruta de autenticación: `/auth/callback` para consumir `GET ${VITE_BACKEND_URL}/api/auth/me` al retornar del login.
-  - Páginas: `src/pages/Dashboard.tsx`, `src/pages/Students.tsx`, `src/pages/Courses.tsx` (placeholders con títulos y secciones vacías).
-  - `src/components/layout/Navbar.tsx`, `src/components/layout/Sidebar.tsx`, `src/components/layout/Layout.tsx` con estructura responsive y clases de Bootstrap (navbar, container, grid).
-- Aceptación:
-  - Navegación entre páginas funciona.
+- Añade React Router DOM (documentado).
+- Rutas base esperadas (SPA):
+  - `/` (Dashboard)
+  - `/students`
+  - `/courses`
+  - `/auth/callback` (retorno OAuth; luego consultar `GET ${VITE_BACKEND_URL}/api/auth/me`)
+
+- Rutas de detalle (Curso y Clase):
+  - `/courses/:courseId` → Detalle de Curso (lista de clases/sesiones del curso, mapea a CourseWork)
+  - `/courses/:courseId/classes/:classId` → Detalle de Clase (materiales/fechas/estado + panel de chat documental)
+
+- Páginas (placeholders/documentales):
+  - `Dashboard`, `Students`, `Courses`, `CourseDetail`, `ClassDetail`
+  - Layout: `Navbar`, `Sidebar`, `Layout` con estructura responsive (Bootstrap 5)
+- Aceptación (documental):
+  - Rutas declaradas y consistentes con `docs/design/ROLES_VIEWS.md`.
   - Layout consistente en todas las vistas.
-  - En `/auth/callback` se actualiza el estado de usuario usando el backend.
-- Calidad:
-  - Tipado estricto, sin `any`.
+  - En `/auth/callback` se consulta `GET /api/auth/me` (documentado) para estado de usuario.
+  - Rutas de Curso/Clase enlazadas desde `Courses` → `CourseDetail` → `ClassDetail`.
+- Calidad (documental):
+  - Tipado estricto, sin `any` (cuando se implemente).
   - Accesibilidad básica (roles ARIA en navbar/sidebar, foco visible).
+  - Guards por rol (documental): `RoleGuard({ allowed })` en rutas sensibles (p. ej. `/students` global → solo `coordinator`).

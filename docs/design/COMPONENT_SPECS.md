@@ -40,7 +40,69 @@ Este documento define el comportamiento y props esperadas de los componentes cla
 ## Spinner
 - Props: `size`, `aria-label` (p.ej. "Cargando")
 
+## ChatMessageList (documental)
+- Props:
+  - `roomId: string` (convención: `${courseId}-${classId}`)
+  - `messages: { id: string; author: string; text: string; timestamp: string }[]`
+  - `currentUserEmail?: string`
+- Comportamiento:
+  - Lista scrollable, agrupación por autor/tiempo opcional
+  - Estados: loading, empty, error (documentales)
+  - Accesibilidad: roles ARIA adecuados para listas de mensajes
+
+## ChatComposer (documental)
+- Props:
+  - `roomId: string`
+  - `onSend: (text: string) => void` (documental)
+  - `placeholder?: string`
+  - `disabled?: boolean`
+- Comportamiento:
+  - Enviar con Enter, nueva línea con Shift+Enter (documental)
+  - Estados: disabled cuando no hay sesión o rol no permitido
+
 ## Layout (Navbar/Sidebar/Layout)
 - Navbar: marca, navegación principal, usuario (email/rol)
 - Sidebar: navegación por secciones; colapsable en móvil
 - Layout: contenedor central, breadcrumbs opcionales, slots para acciones
+
+## Vistas por Rol y Mapa de Páginas (documental)
+
+Ver detalle en `docs/design/ROLES_VIEWS.md`. Resumen:
+
+- Rutas principales: `/` (Dashboard), `/students`, `/courses`, `/auth/callback`.
+- student
+  - Dashboard: tarjetas de próximas entregas, tabla de entregas recientes.
+  - Courses: lista de cursos personales.
+  - Navbar/Sidebar: entradas limitadas a su ámbito.
+- teacher
+  - Dashboard: métricas y alertas por cursos asignados.
+  - Students: lista de estudiantes de sus cursos.
+  - Courses: cursos del docente.
+- coordinator
+  - Dashboard: KPIs globales y filtros por cohorte/curso/docente.
+  - Students: vista global con filtros.
+  - Courses: visión global con métricas.
+
+Componentes por vista (comunes): `Card`, `Table`, `Badge`, `Spinner`, `Input/Select` para filtros; layout con Navbar/Sidebar.
+
+## Estructura de páginas (documental)
+
+### CourseDetail (`/courses/:courseId`)
+- Secciones:
+  - Header: título del curso, sección, docentes (si aplica)
+  - Clases/Sesiones (CourseWork): tabla con `title`, `dueDate`, `state`, acción “Ver clase”
+  - Filtros/búsqueda: por estado y rango de fechas
+- Componentes: `Card`, `Table`, `Badge`, `Input`, `Select`, `Spinner`
+- Estados: loading, empty (sin clases), error
+- Accesibilidad: tabla semántica con `scope="col"`, foco visible
+
+### ClassDetail (`/courses/:courseId/classes/:classId`)
+- Secciones:
+  - Header: título, fecha/hora, estado de la entrega personal
+  - Materiales/Descripción (documental)
+  - Estado de entrega: “Entregado / Pendiente / Atrasado”, fecha límite
+  - Chat de clase: `ChatMessageList` + `ChatComposer` (widget externo; `roomId = ${courseId}-${classId}`)
+- Componentes: `Card`, `Badge`, `Table` (si se listan submissions personales), `ChatMessageList`, `ChatComposer`, `Spinner`
+- Estados: loading, empty (sin mensajes), error; indicador de conexión del chat (documental)
+- Accesibilidad: ARIA para listas de mensajes y formularios
+

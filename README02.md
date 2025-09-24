@@ -2,6 +2,8 @@
 
 A comprehensive web dashboard that integrates with Google Classroom API to track student progress, improve communication, and generate metrics for educational programs.
 
+> Nota importante (MD-only): Este repositorio contiene únicamente documentación en formato Markdown. No incluye código ejecutable. Toda mención a comandos, archivos o configuraciones (Vite/React/Flask/OAuth) debe interpretarse como especificación para una futura implementación. Para ejecutar por partes la documentación operativa, ver `prompts/INDEX_BY_CATEGORY.md` y los batches `prompts/90–97_batch_*.md`.
+
 ## 🎯 Features
 
 - **Google Classroom Integration**: Direct connection to Google Classroom API

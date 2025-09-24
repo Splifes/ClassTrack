@@ -1,5 +1,7 @@
 # Configuración de Google Cloud (OAuth 2.0 — Opción A server-side)
 
+> Nota (MD-only): Este repositorio contiene solo documentación en Markdown. No incluye código ejecutable ni secretos. Este documento complementa el flujo canónico descrito en `../README02.md`. Para ejecutar por partes las consignas operativas, ver `../prompts/INDEX_BY_CATEGORY.md`.
+
 Documento operativo para crear credenciales el día del evento (sin secretos). Opción A usa Authorization Code en el backend Flask (no PKCE en frontend).
 
 ## 1) Crear proyecto en Google Cloud
@@ -47,6 +49,6 @@ VITE_BACKEND_URL=http://localhost:5001
 - Limitar scopes a los mínimos necesarios.
 
 ## 7) Prueba rápida
-- Arrancar backend (`flask run -p 5001`) y frontend (`pnpm dev`).
+- En una implementación futura: arrancar backend (`flask run -p 5001`) y frontend (`pnpm dev`). En este repositorio MD-only, estos comandos son especificación y no se ejecutan aquí.
 - Click en "Login con Google" (frontend) → redirige a backend `/api/auth/login` → Google → backend `/oauth/callback` → frontend `/auth/callback`.
 - Ver email del usuario con `GET /api/auth/me` reflejado en la UI.

@@ -8,16 +8,34 @@ Este documento define los contratos esperados al integrar la API de Google Class
 - Tokens: Access/Refresh gestionados por el backend. El frontend no maneja tokens de Google.
 
 ## Scopes mínimos sugeridos
+- Alinear con `README02.md` y `docs/ENV_SETUP.md` (Option A):
 - `https://www.googleapis.com/auth/classroom.courses.readonly`
 - `https://www.googleapis.com/auth/classroom.rosters.readonly`
-- `https://www.googleapis.com/auth/classroom.coursework.me.readonly`
-- `https://www.googleapis.com/auth/classroom.coursework.students.readonly`
-- `https://www.googleapis.com/auth/classroom.student-submissions.me.readonly`
 - `https://www.googleapis.com/auth/classroom.student-submissions.students.readonly`
+- `https://www.googleapis.com/auth/userinfo.email`
+- `https://www.googleapis.com/auth/userinfo.profile`
+- `openid`
 
 ## Endpoints (resumen)
 
 ### Backend (consumidos por frontend)
+
+#### Autenticación (flujo OAuth server-side)
+
+- Iniciar login
+  - GET `${VITE_BACKEND_URL}/api/auth/login`
+  - Comportamiento: responde `302 Found` y redirige a Google OAuth.
+  - Errores: `500` si falta configuración.
+
+- Callback OAuth (backend)
+  - GET `${VITE_BACKEND_URL}/oauth/callback`
+  - Comportamiento: procesa el `code`, establece sesión/credenciales seguras, y redirige al frontend (p. ej. `/auth/callback`).
+  - Respuestas: `302 Found` (redirect). Errores `400/401/500` según el caso.
+
+- Sesión actual (me)
+  - GET `${VITE_BACKEND_URL}/api/auth/me`
+  - Respuesta `200`: `{ email: string, name?: string, picture?: string }`
+  - `401` si no autenticado.
 
 - Listar cursos
   - GET `${VITE_BACKEND_URL}/api/courses`
@@ -116,3 +134,20 @@ Este documento define los contratos esperados al integrar la API de Google Class
 ## Seguridad
 - Nunca registrar tokens en logs (backend).
 - El frontend NO envía `Authorization: Bearer` a Google; consume el backend, que inyecta credenciales al llamar a Google.
+
+## Chat (documental y roadmap)
+
+En Option A (MD-only) se recomienda un widget de chat externo embebido en la vista de Clase. Convención documental de sala: `roomId = ${courseId}-${classId}`.
+
+### Opción recomendada (MD-only)
+- Widget externo (p. ej., Tawk.to / Sendbird UIKit Web / similar). No requiere endpoints propios ni cambios de scopes.
+- Datos pasados al widget (documental): `roomId`, `displayName`, `email`.
+
+### Roadmap A+: WebSocket propio
+- Canal: `/ws/chat/${roomId}` con Flask-SocketIO.
+- Mensaje (documental): `{ id, roomId, author, text, timestamp }`.
+- Seguridad: autorización por rol; rate limiting.
+
+### Roadmap B: Hilos/Comentarios de Classroom
+- Implica scopes de escritura y latencia distinta a chat en vivo.
+- Usar recursos de `courses.courseWork` y `studentSubmissions` para comentarios si se habilita.

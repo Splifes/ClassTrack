@@ -58,3 +58,27 @@ El estado se divide en 7 stores especializados:
 - Proporciona datos a componentes React
 - Sincronización con Google Classroom API
 
+## Mapa de Integración (documental)
+
+- Dashboard
+  - Hooks: `useCourses()`, `useAssignments(courseId)`, `useSubmissions(courseId, assignmentId)`
+  - Servicios: `getCourses`, `getCourseWork`, `getStudentSubmissions`
+  - Claves de cache: `['courses']`, `['courses', courseId, 'courseWork']`, `['courses', courseId, 'courseWork', workId, 'submissions']`
+  - Slices: `DashboardStore` (métricas), `UIStore` (filtros/selección)
+
+- Students
+  - Hooks: `useStudents(courseId)`
+  - Servicios: `getCourseStudents`
+  - Claves de cache: `['courses', courseId, 'students']`
+  - Slices: `StudentsStore` (lista/filtros/selección)
+
+- Courses
+  - Hooks: `useCourses()`
+  - Servicios: `getCourses`
+  - Claves de cache: `['courses']`
+  - Slices: `CoursesStore` (lista/selección)
+
+Notas:
+- React Query gestiona datos remotos y cache. Zustand gestiona UI/filtros/selección.
+- Ver contratos en `docs/API_CONTRACTS.md` y prompts `05_state_types_hooks.md`, `21_data_access_frontend.md`.
+

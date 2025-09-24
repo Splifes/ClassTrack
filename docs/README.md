@@ -15,3 +15,8 @@ Esta carpeta contiene toda la documentación funcional, de diseño y planificaci
 
 - Mantener todo en formato Markdown.
 - Evitar incluir fragmentos de código ejecutable; preferir pseudocódigo o descripciones.
+
+## Fuentes de verdad
+
+- Ver el índice raíz en `../README.md` (MD-only) para la navegación general del proyecto.
+- Guía canónica del proyecto: `../README02.md` (consignas y flujo Option A). Este repositorio es solo documentación; cualquier mención a archivos ejecutables es especificación para implementación futura.
