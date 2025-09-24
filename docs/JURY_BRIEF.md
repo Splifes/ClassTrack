@@ -7,7 +7,7 @@
 
 ## Solución
 - **ClassTrack**: Capa complementaria a Google Classroom.
-- Conexión directa a Classroom API (email como identidad).
+- Conexión a Classroom API a través de backend Flask (proxy) y OAuth 2.0 server-side (email como identidad).
 - Dashboard y vistas por rol con filtros por cohorte/profesor/estado.
 
 ## Por qué ahora
@@ -41,17 +41,17 @@
 - Reportes avanzados y exportables.
 
 ## Demo (1–2 minutos)
-1) Login con Google (PKCE) → email del usuario en Navbar.
+1) Login con Google (server-side, backend Flask) → email del usuario en Navbar.
 2) Dashboard: métricas generales; abrir Students.
 3) Students: filtros por cohorte/profesor/estado; ver progreso y entregas.
 4) Courses: lista de cursos/profesores.
 5) (Opcional) Notificaciones/Asistencia/Reportes si hay tiempo.
 
 ## Limitaciones (transparentes)
-- Sin backend propio en MVP: tokens manejados en frontend con PKCE.
-- Persistencia de asistencia/notificaciones simulada si no hay backend.
+- Backend mínimo (Flask) sin persistencia propia; la app opera en modo lectura con Google Classroom.
+- Persistencia de asistencia/notificaciones simulada si no se adopta una DB (Roadmap).
 
 ## Próximos pasos
-- Backend proxy seguro para tokens y webhooks.
+- Persistencia (DB) y webhooks/notificaciones.
 - Canal de notificaciones real y almacenamiento histórico.
 - Mejorar analítica y modelos de riesgo.

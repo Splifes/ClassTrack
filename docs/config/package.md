@@ -12,11 +12,10 @@ Este documento describe lo que contendría `package.json` sin incluir código ej
 ## Dependencias principales previstas
 - react, react-dom, react-router-dom
 - @tanstack/react-query, zustand
-- lucide-react, recharts, clsx, tailwind-merge
+- lucide-react, recharts, clsx, bootstrap
 
 ## Dependencias de desarrollo previstas
 - typescript, vite, @vitejs/plugin-react
-- tailwindcss, postcss, autoprefixer
 - eslint y @typescript-eslint/* (opcional)
 
 ## Motores

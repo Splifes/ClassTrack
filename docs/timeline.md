@@ -39,18 +39,22 @@
 **9:30 - 10:30 | Estructura Base**
 - [ ] Crear estructura de carpetas
 - [ ] Configurar Vite + React + TypeScript
-- [ ] Setup de TailwindCSS
+- [ ] Añadir Bootstrap 5 (npm o CDN)
 - [ ] Configurar ESLint y Prettier
 - [ ] Crear componentes base (Button, Card, Input)
 
 **10:30 - 11:00 | Break**
 
-**11:00 - 12:00 | Autenticación**
-- [ ] Implementar AuthService
-- [ ] Crear página de login
-- [ ] Configurar OAuth con Google
-- [ ] Implementar manejo de tokens
-- [ ] Crear rutas protegidas
+**11:00 - 12:00 | Backend Setup**
+- [ ] Crear backend Flask base
+- [ ] Healthcheck `/health`
+- [ ] CORS para `http://localhost:5173`
+
+**12:00 - 12:30 | Autenticación (server-side)**
+- [ ] Endpoint `GET /api/auth/login`
+- [ ] Callback `GET /oauth/callback`
+- [ ] `GET /api/auth/me` y `POST /api/auth/logout`
+- [ ] Ruta frontend `/auth/callback`
 
 #### 🍽️ Almuerzo (12:00 - 13:00)
 
@@ -181,12 +185,12 @@ pnpm create vite classtrack-mvp --template react-ts
 cd classtrack-mvp
 
 # Instalar dependencias
-pnpm install @tanstack/react-query zustand lucide-react recharts clsx tailwind-merge
+pnpm install @tanstack/react-query zustand lucide-react recharts clsx bootstrap
 pnpm install -D @types/node
 
-# Configurar TailwindCSS
-pnpm install -D tailwindcss postcss autoprefixer
-npx tailwindcss init -p
+# Backend Flask (estructura mínima)
+python -m venv .venv && source .venv/bin/activate  # (Windows: .venv\Scripts\activate)
+pip install flask flask-cors python-dotenv requests
 ```
 
 ### Estructura de Carpetas
@@ -235,11 +239,11 @@ export interface MetricCardProps {
 
 ### Hooks Personalizados
 ```tsx
-// useGoogleClassroom.ts
+// useClassroom.ts (consumiendo backend)
 export const useCourses = () => {
   return useQuery({
     queryKey: ['courses'],
-    queryFn: () => classroomService.getCourses(),
+    queryFn: () => api.get(`${import.meta.env.VITE_BACKEND_URL}/api/courses`).then(r => r.data),
     staleTime: 5 * 60 * 1000,
   });
 };

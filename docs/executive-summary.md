@@ -44,14 +44,14 @@ ClassTrack transforma el seguimiento educativo mediante:
 ## 🛠️ Arquitectura Técnica
 
 ### Stack Tecnológico
-- **Frontend**: React 18 + TypeScript + TailwindCSS
+- **Frontend**: React 18 + TypeScript + Bootstrap 5
 - **Estado**: Zustand + React Query
-- **Autenticación**: OAuth 2.0 PKCE (Google)
-- **API**: Google Classroom REST (solo lectura)
-- **Despliegue**: Vercel/Netlify (estático)
+- **Autenticación**: OAuth 2.0 Authorization Code (server-side, backend Flask)
+- **API**: Backend Flask como proxy a Google Classroom REST (solo lectura)
+- **Despliegue**: Frontend (Vercel/Netlify) + Backend (Render/Railway/Fly)
 
 ### Principios de Diseño
-- **Seguridad First**: Solo permisos de lectura, OAuth 2.0 PKCE
+- **Seguridad First**: Solo permisos de lectura, OAuth 2.0 server-side
 - **Performance**: Caché inteligente, lazy loading, optimización
 - **Escalabilidad**: Arquitectura modular, componentes reutilizables
 - **UX**: Interfaz intuitiva, responsive, accesible
@@ -180,10 +180,10 @@ ClassTrack transforma el seguimiento educativo mediante:
 - **Cumplimiento**: Políticas de privacidad de Google
 
 ### Autenticación
-- **OAuth 2.0 PKCE**: Máxima seguridad para SPAs
-- **Tokens Temporales**: Expiración automática
-- **Refresh Tokens**: Renovación automática
-- **Logout Seguro**: Limpieza completa de sesión
+- **OAuth 2.0 (server-side)**: Backend maneja intercambio de código por tokens
+- **Tokens Temporales**: Gestión y storage en servidor
+- **Refresh Tokens**: Renovación en backend cuando aplique
+- **Logout Seguro**: Invalida sesión en backend y limpia estado del cliente
 
 ---
 

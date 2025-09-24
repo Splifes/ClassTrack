@@ -1,14 +1,14 @@
-# Prompt 15 — Theme & Tokens → Tailwind Config
+# Prompt 15 — Theme & Tokens → Bootstrap + CSS Variables
 
-Objetivo: transformar los design tokens en un tema de Tailwind y utilidades, sin salir del stack definido.
+Objetivo: mapear design tokens a variables CSS y clases utilitarias compatibles con Bootstrap 5 sin introducir Tailwind.
 
 Instrucciones
-- Usa `docs/design/TOKENS.md` para mapear colores, tipografía, radios, sombras y breakpoints en `tailwind.config.js`.
-- Crea `src/styles/tokens.css` solo con comentarios de referencia (si se usa), y asegura `@tailwind base; @tailwind components; @tailwind utilities;` en `src/index.css`.
-- Extiende el tema: `colors`, `fontFamily`, `fontSize`, `borderRadius`, `boxShadow`, `screens`, `transitionDuration`, `transitionTimingFunction`.
-- No añadir dependencias extra; solo Tailwind y PostCSS.
+- Usa `docs/design/TOKENS.md` para definir variables en `src/styles/theme.css` (ej.: `--color-primary`, `--radius-md`, `--shadow-sm`).
+- Overridea variables de Bootstrap cuando aplique en `:root` (ej.: `--bs-primary`, `--bs-body-font-family`, `--bs-border-radius`).
+- Crea utilidades mínimas en `theme.css` para gaps/spacing o helpers no cubiertos por Bootstrap (opcional).
+- Importa `theme.css` en `src/main.tsx` o `src/index.css` después del CSS de Bootstrap.
 
 Criterios de aceptación
-- Clases generadas reflejan los tokens (ej.: `bg-primary-500`, `text-neutral-900`).
-- Tipografías y tamaños definidos coherentemente con la guía.
-- Radios y sombras aplicables en `Card`, `Button`.
+- Colores, tipografía, radios y sombras del diseño aplican a componentes Bootstrap (`btn`, `card`, etc.).
+- No hay dependencias adicionales; solo Bootstrap + CSS propio.
+- Documentación breve de qué tokens se mapean a qué variables Bootstrap.

@@ -1,35 +1,32 @@
 # Servicio de Autenticación - AuthService
 
 ## Propósito
-Maneja la autenticación OAuth 2.0 PKCE con Google para acceder a la API de Google Classroom.
+Maneja la autenticación con Google mediante OAuth 2.0 Authorization Code en el backend Flask. El frontend solo inicia el flujo, consulta el estado de sesión y ejecuta logout. Los tokens de Google nunca se almacenan en el cliente.
 
 ## Funcionalidades Principales
-- **OAuth 2.0 PKCE**: Flujo de autenticación seguro con Google
-- **Gestión de Tokens**: Access token y refresh token
-- **Información de Usuario**: Perfil y permisos basados en rol
-- **Persistencia**: Almacenamiento en localStorage
-- **Renovación Automática**: Refresh de tokens expirados
+- **Inicio de Login**: Redirección a `GET ${VITE_BACKEND_URL}/api/auth/login`
+- **Callback (frontend)**: Ruta `/auth/callback` que luego consulta `GET ${VITE_BACKEND_URL}/api/auth/me`
+- **Estado de Usuario**: Datos básicos (email) para UI y rol (placeholder)
+- **Logout**: `POST ${VITE_BACKEND_URL}/api/auth/logout`
+- **Sin manejo de tokens** en el cliente; el backend mantiene sesión segura
 
 ## Estructura de la Clase
 ```typescript
 class AuthService {
-  private accessToken: string | null
-  private refreshToken: string | null
   private user: User | null
 }
 ```
 
 ## Métodos Principales
-- `initiateAuth()`: Inicia el flujo OAuth
-- `handleCallback(code)`: Procesa el callback de Google
-- `refreshAccessToken()`: Renueva tokens expirados
-- `isAuthenticated()`: Verifica estado de autenticación
-- `logout()`: Cierra sesión y limpia datos
+- `login()`: Abre `GET /api/auth/login` del backend
+- `me()`: Consulta `GET /api/auth/me` para estado de sesión
+- `logout()`: `POST /api/auth/logout` y limpia estado local
+- `isAuthenticated()`: Verifica estado de usuario en memoria
 
 ## Configuración OAuth
-- **Client ID**: Variable de entorno `VITE_GOOGLE_CLIENT_ID`
-- **Redirect URI**: `VITE_GOOGLE_REDIRECT_URI`
-- **Scopes**: classroom.courses.readonly, classroom.rosters.readonly, etc.
+- Configurado en el backend Flask (`GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `GOOGLE_REDIRECT_URI`)
+- Frontend solo necesita `VITE_BACKEND_URL`
+- Scopes: classroom.courses.readonly, classroom.rosters.readonly, classroom.student-submissions.students.readonly, openid, email, profile
 
 ## Roles y Permisos
 - **Coordinator**: Acceso completo a todos los datos
@@ -38,6 +35,6 @@ class AuthService {
 
 ## Integración
 - Se integra con el store de autenticación (Zustand)
-- Maneja tokens para Google Classroom API
-- Persiste estado en localStorage
+- No maneja tokens de Google en el cliente
+- Estado del usuario persistido opcionalmente (sin tokens) según UX
 

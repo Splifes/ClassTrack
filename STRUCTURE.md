@@ -7,7 +7,7 @@ Este repositorio está diseñado para una competencia donde NO se permite inclui
 
 ## Vista general de carpetas
 
-- `docs/`: Documentación funcional, de diseño y cronograma. Agregamos `docs/config/` para detallar configuraciones planeadas (Vite, TS, Tailwind, etc.).
+- `docs/`: Documentación funcional, de diseño y cronograma. Agregamos `docs/config/` para detallar configuraciones planeadas (Vite, TS, Bootstrap 5, backend Flask, etc.).
 - `src/`: Esqueleto de la aplicación (solo documentación). Describe componentes, hooks, servicios, estado global, tipos y datos simulados (todo como `.md`).
 
 ## Cumplimiento “No-Code”
@@ -21,7 +21,8 @@ Este repositorio está diseñado para una competencia donde NO se permite inclui
 - Entradas del frontend: `index.html`, `src/main.tsx`, `src/App.tsx` (no presentes; solo descritos en docs).
 - Enrutamiento: `react-router-dom` con páginas `Dashboard`, `Students`, `Courses` (solo descritas).
 - Estado: Zustand + React Query (solo descritos, sin código).
-- Estilos: Tailwind CSS (documentado, no configurado).
+- Estilos: Bootstrap 5 (documentado, no configurado; Tailwind queda como legado/opcional en Roadmap).
+- Backend: Flask (documentado en prompts 24–26 para Option A; sin código en este repo).
 
 ## Próximos pasos sugeridos
 

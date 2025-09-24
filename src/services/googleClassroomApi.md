@@ -1,7 +1,7 @@
 # Servicio Google Classroom API
 
 ## Propósito
-Maneja todas las interacciones con la API de Google Classroom para obtener datos de cursos, estudiantes y entregas.
+Maneja las interacciones con datos de Google Classroom a través del backend Flask (proxy). El frontend NO usa tokens de Google directamente.
 
 ## Funcionalidades Principales
 - **Cursos**: Obtener lista y detalles de cursos
@@ -12,30 +12,26 @@ Maneja todas las interacciones con la API de Google Classroom para obtener datos
 
 ## Estructura de la Clase
 ```typescript
-class GoogleClassroomService {
-  private accessToken: string
-  constructor(accessToken: string)
+class ClassroomApiService {
+  constructor(private baseUrl: string) {}
 }
 ```
 
 ## Métodos Principales
-- `getCourses()`: Lista de cursos del usuario
-- `getCourse(courseId)`: Detalles de un curso específico
-- `getCourseStudents(courseId)`: Estudiantes de un curso
-- `getCourseWork(courseId)`: Tareas de un curso
-- `getStudentSubmissions(courseId, courseWorkId)`: Entregas de una tarea
-- `getCompleteCourseData(courseId)`: Datos completos del curso
+- `getCourses()`: `GET ${VITE_BACKEND_URL}/api/courses`
+- `getCourse(courseId)`: `GET ${VITE_BACKEND_URL}/api/courses/:courseId` (si aplica)
+- `getCourseStudents(courseId)`: `GET ${VITE_BACKEND_URL}/api/courses/:courseId/students`
+- `getCourseWork(courseId)`: `GET ${VITE_BACKEND_URL}/api/courses/:courseId/courseWork`
+- `getStudentSubmissions(courseId, courseWorkId)`: `GET ${VITE_BACKEND_URL}/api/courses/:courseId/courseWork/:workId/submissions`
+- `getCompleteCourseData(courseId)`: Composición de las llamadas anteriores
 
-## Configuración API
-- **Base URL**: `https://classroom.googleapis.com/v1`
+## Configuración API (frontend)
+- **Base URL frontend**: `${import.meta.env.VITE_BACKEND_URL}`
 - **Timeout**: 10 segundos
-- **Headers**: Authorization Bearer token
+- **Headers**: Cookies/sesión manejadas por backend (no bearer token de Google en el cliente)
 
 ## Scopes Requeridos
-- `classroom.courses.readonly`
-- `classroom.rosters.readonly`
-- `classroom.coursework.me.readonly`
-- `classroom.student-submissions.students.readonly`
+- Configurados en el backend Flask al iniciar el flujo OAuth.
 
 ## Manejo de Errores
 - Respuestas tipadas con `ApiResponse<T>`
@@ -44,6 +40,6 @@ class GoogleClassroomService {
 
 ## Patrón Singleton
 - Instancia única del servicio
-- Inicialización con token de acceso
+- Inicialización con `baseUrl` (usar `VITE_BACKEND_URL`)
 - Reutilización en toda la aplicación
 

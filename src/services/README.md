@@ -2,7 +2,7 @@
 
 Servicios planeados (APIs, autenticación). Solo documentación.
 
-- `authService.md`: Flujo OAuth 2.0/PKCE con Google
-- `googleClassroomApi.md`: Sincronización y endpoints de Classroom
+- `authService.md`: Flujo OAuth 2.0 (server-side) con backend Flask
+- `googleClassroomApi.md`: Consumo de endpoints del backend (proxy a Classroom)
 
 No incluir archivos `.ts` durante la competencia.

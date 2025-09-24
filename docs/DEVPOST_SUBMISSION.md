@@ -11,12 +11,12 @@ ClassTrack — Seguimiento y métricas para Google Classroom
 - Métricas accesibles para coordinadores (asistencia, participación, entregas).
 
 ## Cómo lo construimos
-- Frontend: React 18 + TypeScript + Vite + Tailwind.
+- Frontend: React 18 + TypeScript + Vite + Bootstrap 5.
 - Estado: React Query (server-state) + Zustand (UI/local-state).
-- Integración: Google OAuth 2.0 (PKCE), Google Classroom API. (Opcional: Calendar).
+- Integración: Google OAuth 2.0 (Authorization Code server-side en backend Flask), Google Classroom API a través de proxy backend. (Opcional: Calendar).
 
 ## Principales funcionalidades
-- Login con Google (PKCE) y detección de email del usuario.
+- Login con Google (server-side) y detección de email del usuario.
 - Dashboard con métricas básicas.
 - Vistas: Students (progreso y estado de entregas) y Courses (clases y profesores).
 - Filtros por cohorte, profesor y estado de entrega.
@@ -24,18 +24,16 @@ ClassTrack — Seguimiento y métricas para Google Classroom
 
 ## Cómo ejecutarlo (local)
 1) Requisitos: Node 18+, pnpm 8+
-2) `pnpm install`
-3) Crear `.env.local` con:
+2) Backend: Python 3.10+, crear `.env` según `prompts/27_backend_env_template.md` y ejecutar `flask run -p 5001`
+3) Frontend: `pnpm install`
+4) Crear `.env.local` con:
 ```
-VITE_GOOGLE_CLIENT_ID=...
-VITE_GOOGLE_REDIRECT_URI=http://localhost:5173/auth/callback
-VITE_API_BASE_URL=
-VITE_GOOGLE_CLASSROOM_API_URL=https://classroom.googleapis.com
+VITE_BACKEND_URL=http://localhost:5001
 ```
-4) `pnpm dev` y abrir `http://localhost:5173`
+5) `pnpm dev` y abrir `http://localhost:5173`
 
 ## Cómo probarlo
-- Click en “Login con Google”, autorizar y volver a la app.
+- Click en “Login con Google”, se redirige al backend → Google → backend `/oauth/callback` → frontend `/auth/callback`.
 - Explorar Dashboard, Students y Courses.
 - Probar filtros y ver estados de loading/error.
 
@@ -44,7 +42,7 @@ VITE_GOOGLE_CLASSROOM_API_URL=https://classroom.googleapis.com
 - Guion: login → dashboard → students (filtros/entregas) → courses → (opcional) extra.
 
 ## Desafíos que enfrentamos
-- Integración con OAuth PKCE sin backend.
+- Integración OAuth server-side y manejo de sesión segura.
 - Normalización de datos de Classroom y paginaciones.
 
 ## Qué aprendimos
@@ -52,7 +50,7 @@ VITE_GOOGLE_CLASSROOM_API_URL=https://classroom.googleapis.com
 - Optimización de DX con prompts y fases de trabajo.
 
 ## Qué sigue
-- Backend proxy para tokens y webhooks.
+- Persistencia opcional (DB), webhooks/notificaciones.
 - Notificaciones/Asistencia persistentes y reportes avanzados.
 
 ## Repositorio

@@ -1,6 +1,6 @@
 # Design Tokens (Sin código)
 
-Definimos tokens para mapear 1:1 a un tema de Tailwind luego (ver prompt 15). No son CSS, son contratos.
+Definimos tokens como contratos neutrales de diseño. En Opción A se mapean a variables CSS y a variables/temas de Bootstrap (ver `prompts/15_theme_tokens_tailwind.md`, ahora orientado a Bootstrap + CSS variables).
 
 ## Color
 - palette.primary.500 = #0ea5e9

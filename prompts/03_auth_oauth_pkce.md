@@ -1,18 +1,26 @@
-# Prompt 03 — Autenticación Google OAuth 2.0 PKCE
+# Prompt 03 — Autenticación Google OAuth 2.0 (Server-side, Flask)
 
-Objetivo: implementar flujo OAuth 2.0 PKCE con Google para identificar usuarios por email (alumnos/profesores/coordinadores).
+Objetivo: integrar autenticación con Google usando Authorization Code en el backend Flask. El frontend solo inicia el flujo y consume el estado de sesión; no maneja secretos ni tokens de Google.
 
 Instrucciones
-- Crear servicio `src/services/auth.ts` con:
-  - Generación/verificación PKCE (code verifier/challenge).
-  - Redirección a Google (scopes de Classroom necesarios).
-  - Intercambio de código por tokens en backend proxy o, si solo frontend, usar Authorization Code with PKCE y endpoints públicos de Google (sin exponer secretos, usar `VITE_GOOGLE_CLIENT_ID` y `VITE_GOOGLE_REDIRECT_URI`).
-  - Manejo de tokens, refresh si aplica, logout seguro.
-- Crear hook `src/hooks/useAuth.ts`.
-- Agregar `src/store/auth.ts` (Zustand) para estado mínimo del usuario (email, role placeholder, tokens en memoria segura).
-- Aceptación:
-  - Login redirige a Google y vuelve a la app autenticado.
-  - Email del usuario disponible en el estado y UI (Navbar).
-  - No se exponen secretos ni se commitea `.env` real.
-- Calidad:
-  - Manejo de errores claro, logs controlados, sin credenciales en consola.
+- Servicio `src/services/auth.ts` (frontend) con funciones:
+  - `login()` → abrir `GET ${VITE_BACKEND_URL}/api/auth/login` (redirige a Google)
+  - `logout()` → `POST ${VITE_BACKEND_URL}/api/auth/logout`
+  - `me()` → `GET ${VITE_BACKEND_URL}/api/auth/me`
+- Ruta `/auth/callback` en frontend que, al volver del backend, llama `me()` y actualiza UI/estado.
+- Hook `src/hooks/useAuth.ts` para exponer `user`, `isAuthenticated`, `login`, `logout`, `loading`.
+- Store `src/store/auth.ts` (Zustand) para estado mínimo del usuario (email, role placeholder). No guardes tokens de Google en el cliente.
+
+Notas
+- Backend implementado según `prompts/25_backend_oauth_google.md`.
+- Variables frontend: `VITE_BACKEND_URL` (ver `prompts/00_env_variables.md`).
+- Scopes y redirect se configuran en el backend.
+
+Aceptación
+- Login abre Google, retorna por `/oauth/callback` en backend y éste redirige a `/auth/callback` (frontend) con sesión válida.
+- `me()` devuelve datos básicos (email) y se reflejan en Navbar/UI.
+- No se exponen secretos ni tokens en el frontend; `.env` real no se commitea.
+
+Calidad
+- Manejo de errores claro, toasts/alerts discretos en UI.
+- Logs controlados (sin credenciales en consola).

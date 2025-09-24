@@ -36,7 +36,7 @@ import { Button, Card, Input } from '@/components/ui'
 ## Organización
 - Cada componente en su propio archivo
 - Props tipadas con TypeScript
-- Estilos con Tailwind CSS
+- Estilos con clases de Bootstrap 5 y CSS propio cuando sea necesario
 - Accesibilidad integrada
 - Documentación en cada componente
 

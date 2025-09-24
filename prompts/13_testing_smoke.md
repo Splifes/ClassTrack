@@ -7,7 +7,7 @@ Instrucciones
 - Pruebas manuales guiadas (sin framework, por tiempo):
   1) App arranca en `http://localhost:5173` sin errores en consola.
   2) Navegación funciona entre `/`, `/students`, `/courses`.
-  3) Login OAuth PKCE redirige y retorna a `/auth/callback` mostrando email en UI.
+  3) Login OAuth server-side (backend Flask): `GET /api/auth/login` redirige a Google; retorna por `/oauth/callback` (backend) y luego `/auth/callback` (frontend) mostrando email en UI.
   4) Classroom API: listar cursos, alumnos, profesores, tareas. Manejo de `loading`/`error` visible.
   5) Filtros: cohorte/profesor/estado aplican sobre las tablas.
   6) UI: botones deshabilitados muestran estado `loading`, focus visible en elementos interactivos.

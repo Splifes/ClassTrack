@@ -5,7 +5,7 @@ Este directorio documenta, sin incluir archivos ejecutables, las configuraciones
 - Bundler: Vite
 - Lenguaje: TypeScript
 - Framework UI: React 18
-- Estilos: Tailwind CSS + PostCSS
+- Estilos: Bootstrap 5 (Tailwind: legado/opcional, ver Roadmap)
 - Estado: Zustand + React Query
 - Routing: React Router DOM
 - Iconos: Lucide React

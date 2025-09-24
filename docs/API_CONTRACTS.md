@@ -3,9 +3,9 @@
 Este documento define los contratos esperados al integrar la API de Google Classroom. Sirve para tipar en el frontend y acordar expectativas de datos.
 
 ## Autenticación
-- Protocolo: OAuth 2.0 Authorization Code con PKCE.
+- Protocolo: OAuth 2.0 Authorization Code en backend Flask (server-side).
 - Identidad: email de la cuenta de Google.
-- Tokens: Access Token (Bearer) y Refresh (si aplica).
+- Tokens: Access/Refresh gestionados por el backend. El frontend no maneja tokens de Google.
 
 ## Scopes mínimos sugeridos
 - `https://www.googleapis.com/auth/classroom.courses.readonly`
@@ -16,6 +16,31 @@ Este documento define los contratos esperados al integrar la API de Google Class
 - `https://www.googleapis.com/auth/classroom.student-submissions.students.readonly`
 
 ## Endpoints (resumen)
+
+### Backend (consumidos por frontend)
+
+- Listar cursos
+  - GET `${VITE_BACKEND_URL}/api/courses`
+  - Query: `pageSize`, `pageToken`
+  - Respuesta: `{ courses: Course[], nextPageToken?: string }`
+
+- Miembros (estudiantes) de un curso
+  - GET `${VITE_BACKEND_URL}/api/courses/{courseId}/students`
+  - Respuesta: `{ students: StudentProfile[], nextPageToken?: string }`
+
+- Profesores de un curso
+  - GET `${VITE_BACKEND_URL}/api/courses/{courseId}/teachers`
+  - Respuesta: `{ teachers: TeacherProfile[], nextPageToken?: string }`
+
+- Tareas (courseWork) de un curso
+  - GET `${VITE_BACKEND_URL}/api/courses/{courseId}/courseWork`
+  - Respuesta: `{ courseWork: CourseWork[], nextPageToken?: string }`
+
+- Entregas (submissions) por tarea
+  - GET `${VITE_BACKEND_URL}/api/courses/{courseId}/courseWork/{courseWorkId}/submissions`
+  - Respuesta: `{ studentSubmissions: Submission[], nextPageToken?: string }`
+
+### Referencia Google (usadas por el backend)
 
 - Listar cursos
   - GET `https://classroom.googleapis.com/v1/courses`
@@ -81,7 +106,7 @@ Este documento define los contratos esperados al integrar la API de Google Class
 - Cohortes: derivar por convención de `section` o metadatos externos.
 
 ## Errores
-- 401/403: token inválido o scopes insuficientes → refrescar token o relogin.
+- 401/403: sesión no válida o scopes insuficientes → relogin.
 - 429: rate limiting → backoff exponencial.
 - 5xx: reintentos con jitter.
 
@@ -89,5 +114,5 @@ Este documento define los contratos esperados al integrar la API de Google Class
 - Usar `pageToken` y acumular resultados hasta completar.
 
 ## Seguridad
-- Nunca registrar tokens en logs.
-- Usar `Authorization: Bearer <token>` en todas las llamadas.
+- Nunca registrar tokens en logs (backend).
+- El frontend NO envía `Authorization: Bearer` a Google; consume el backend, que inyecta credenciales al llamar a Google.

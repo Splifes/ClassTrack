@@ -10,17 +10,17 @@ ClassTrack es una aplicación web para el seguimiento y análisis del progreso d
 ### Frontend
 - **Framework**: React 18 con TypeScript
 - **Bundler**: Vite
-- **Styling**: Tailwind CSS
+- **Styling**: Bootstrap 5
 - **State Management**: Zustand + React Query
 - **Routing**: React Router DOM
 - **Icons**: Lucide React
 - **Charts**: Recharts
 
-### Backend (Futuro)
-- **Base de Datos**: Supabase (PostgreSQL)
-- **API**: REST API con Express.js
-- **Autenticación**: OAuth 2.0 con Google
-- **Real-time**: WebSockets para notificaciones
+### Backend (Opción A)
+- **Framework**: Flask (Python)
+- **Función**: OAuth 2.0 Authorization Code (server-side) y proxy a Google Classroom
+- **CORS**: Permite `http://localhost:5173`
+- **Persistencia**: Opcional (Roadmap) si se adopta DB
 
 ### Integración
 - **Google Classroom API**: Sincronización de datos
@@ -31,7 +31,7 @@ ClassTrack es una aplicación web para el seguimiento y análisis del progreso d
 
 ### `/src/services/`
 - **authService.md**: Servicio de autenticación OAuth
-- **googleClassroomApi.md**: Integración con Google Classroom
+- **googleClassroomApi.md**: Integración con backend (proxy de Google Classroom)
 
 ### `/src/store/`
 - **index.md**: Estado global con Zustand
@@ -45,7 +45,7 @@ ClassTrack es una aplicación web para el seguimiento y análisis del progreso d
 - **index.md**: Índice de componentes UI
 
 ### `/src/hooks/`
-- **useGoogleClassroom.md**: Hook para integración con Google Classroom
+- **useGoogleClassroom.md**: Hook para consumir endpoints del backend
 
 ### `/src/data/`
 - **mockData.md**: Datos de prueba para desarrollo
@@ -95,9 +95,7 @@ pnpm install
 
 ### Variables de Entorno
 Copiar `env.example` a `.env.local` y configurar:
-- `VITE_GOOGLE_CLIENT_ID`
-- `VITE_GOOGLE_CLIENT_SECRET`
-- `VITE_GOOGLE_REDIRECT_URI`
+- `VITE_BACKEND_URL` (por ejemplo `http://localhost:5001`)
 
 ### Scripts
 - `pnpm dev`: Servidor de desarrollo
@@ -138,10 +136,9 @@ Copiar `env.example` a `.env.local` y configurar:
 ## Seguridad
 
 ### Autenticación
-- OAuth 2.0 PKCE con Google
-- Tokens de acceso y refresh
-- Renovación automática de tokens
-- Logout seguro
+- OAuth 2.0 Authorization Code (server-side) con Google
+- Intercambio de tokens y sesión gestionados en el backend (Flask)
+- Logout seguro (invalidación de sesión en backend)
 
 ### Autorización
 - Roles: coordinator, teacher, student
@@ -158,10 +155,10 @@ Copiar `env.example` a `.env.local` y configurar:
 - Optimización de bundle
 
 ### Backend (Futuro)
-- Base de datos escalable (Supabase)
-- API REST stateless
-- Caching con Redis
-- CDN para assets estáticos
+ - Persistencia opcional (Supabase/PostgreSQL) si se requiere almacenamiento propio
+ - API REST adicional (si aplica)
+ - Caching con Redis (opcional)
+ - CDN para assets estáticos (opcional)
 
 ## Monitoreo y Analytics
 

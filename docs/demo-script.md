@@ -13,7 +13,7 @@
 - 0:05–0:20 — Dashboard: 3 KPIs, filtros (cohorte/profesor/estado), gráficos.
 - 0:20–0:35 — Students: lista, estados (entregado/atrasado/faltante/reentrega), alumnos en riesgo.
 - 0:35–0:50 — Courses: clases por profesor, métricas resumidas.
-- 0:50–1:10 — Login Google (PKCE) y seguridad: solo lectura, scopes mínimos.
+- 0:50–1:10 — Login Google (server-side via backend Flask) y seguridad: solo lectura, scopes mínimos.
 - 1:10–1:25 — Impacto: -70% tiempo de seguimiento, +85% comunicación, +200% detección de riesgo.
 - 1:25–1:35 — Opcionales (si aplica): notificaciones, asistencia, reportes/export.
 - 1:35–1:50 — Cierre: nombre del proyecto, QR demo, contacto.
@@ -261,7 +261,7 @@
 │                                                             │
 │ ┌─────────────────────────────────────────────────────────┐ │
 │ │ ✅ Solo permisos de lectura                             │ │
-│ │ ✅ Autenticación OAuth 2.0 PKCE                         │ │
+│ │ ✅ Autenticación OAuth 2.0 (server-side, backend Flask) │ │
 │ │ ✅ Datos encriptados en tránsito                        │ │
 │ │ ✅ Sincronización en tiempo real                        │ │
 │ │ ✅ Cumplimiento GDPR                                    │ │

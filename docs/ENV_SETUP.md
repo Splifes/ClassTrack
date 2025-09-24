@@ -1,6 +1,6 @@
-# Configuración de Google Cloud (OAuth 2.0 PKCE)
+# Configuración de Google Cloud (OAuth 2.0 — Opción A server-side)
 
-Documento operativo para crear credenciales el día del evento (sin secretos).
+Documento operativo para crear credenciales el día del evento (sin secretos). Opción A usa Authorization Code en el backend Flask (no PKCE en frontend).
 
 ## 1) Crear proyecto en Google Cloud
 - Ir a https://console.cloud.google.com/
@@ -20,25 +20,33 @@ Documento operativo para crear credenciales el día del evento (sin secretos).
 ## 4) Crear credenciales OAuth 2.0 (Client ID)
 - Application type: Web application
 - Authorized redirect URIs:
-  - Desarrollo local: `http://localhost:5173/auth/callback`
-  - Producción (si deploy): `https://<tu-dominio>/auth/callback`
-- Al finalizar, guardar: Client ID (sin subir al repo) y el Redirect URI.
+  - Desarrollo local (backend): `http://localhost:5001/oauth/callback`
+  - Producción (si deploy, backend): `https://<backend-domain>/oauth/callback`
+- Al finalizar, guardar: Client ID y Client Secret (no subir al repo) y el Redirect URI.
 
 ## 5) Variables de entorno (no comprometer secretos)
-- Crear `.env.local` (no commit) en el repo de IMPLEMENTACIÓN el día del evento:
+- Backend (.env) — ver `prompts/27_backend_env_template.md`:
 ```
-VITE_GOOGLE_CLIENT_ID=xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-VITE_GOOGLE_REDIRECT_URI=http://localhost:5173/auth/callback
-VITE_API_BASE_URL=
-VITE_GOOGLE_CLASSROOM_API_URL=https://classroom.googleapis.com
+FLASK_ENV=development
+PORT=5001
+BASE_URL=http://localhost:5001
+FRONTEND_URL=http://localhost:5173
+SECRET_KEY=change-this
+GOOGLE_CLIENT_ID=...
+GOOGLE_CLIENT_SECRET=...
+GOOGLE_REDIRECT_URI=http://localhost:5001/oauth/callback
+```
+- Frontend (`.env.local`):
+```
+VITE_BACKEND_URL=http://localhost:5001
 ```
 
 ## 6) Consideraciones de seguridad
 - No usar client secret en el frontend.
-- Usar Authorization Code with PKCE (sin secreto) en frontend.
+- El backend maneja el intercambio de código por tokens y mantiene la sesión.
 - Limitar scopes a los mínimos necesarios.
 
 ## 7) Prueba rápida
-- Arrancar la app.
-- Click en "Login con Google" → autorizar → volver a `/auth/callback`.
-- Ver email del usuario en el Navbar.
+- Arrancar backend (`flask run -p 5001`) y frontend (`pnpm dev`).
+- Click en "Login con Google" (frontend) → redirige a backend `/api/auth/login` → Google → backend `/oauth/callback` → frontend `/auth/callback`.
+- Ver email del usuario con `GET /api/auth/me` reflejado en la UI.

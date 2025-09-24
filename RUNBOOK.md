@@ -2,10 +2,11 @@
 
 Ventana: Sep 25, 15:00 UTC → Sep 26, 15:00 UTC
 
-- 15:00–15:30: Prompt 01 (Scaffold & Configs). Repo corre en local.
+- 15:00–15:30: Prompt 01 (Scaffold & Configs, Bootstrap). Repo corre en local.
 - 15:30–16:15: Prompt 02 (App Shell & Routing). Navegación básica.
-- 16:15–17:30: Prompt 03 (Auth PKCE). Login funcionando, email visible.
-- 17:30–19:00: Prompt 04 (Classroom API). Listas y hooks básicos.
+- 16:15–17:30: Prompt 24 (Backend Flask Setup). Healthcheck y CORS listos.
+- 17:30–18:15: Prompt 25 (Auth server-side). Login funcionando, email visible.
+- 18:15–19:00: Prompt 04 (API via backend). Listas y hooks básicos.
 - 19:00–20:00: Prompt 05 (State/Types/Hooks). Filtros y contratos.
 - 20:00–21:00: Prompt 06 (UI Components). Componentes reutilizables.
 - 21:00–22:30: Prompt 07 (Dashboard/Pages). MVP visible.

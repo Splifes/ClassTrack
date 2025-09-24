@@ -5,9 +5,9 @@ Objetivo: componer UI reutilizable y accesible.
 Instrucciones
 - `src/components/ui/`:
   - `Button`, `Card`, `Badge`, `Input`, `Select` (con `label` accesible), `Table` (simple), `Spinner`.
-  - `cn()` util con `clsx` + `tailwind-merge`.
-- Estilo: Tailwind, dark-mode opcional.
+  - Estilo: Bootstrap 5 (usar clases `btn`, `card`, `form-control`, `table`, etc.).
+  - Utilidad opcional `cn()` solo con `clsx` (sin `tailwind-merge`).
 - Aceptación:
-  - Props tipadas, variantes (`primary`, `secondary`, `ghost`, etc.).
+  - Props tipadas, variantes alineadas a Bootstrap (`primary`, `secondary`, `outline`, `link`).
   - Estados `loading`, `disabled`.
   - Accesibilidad: ARIA y focus states.

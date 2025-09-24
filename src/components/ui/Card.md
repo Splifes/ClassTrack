@@ -12,10 +12,11 @@ Componente de tarjeta reutilizable para mostrar información estructurada en la 
 - **hover**: boolean para efecto hover
 
 ## Variantes de Estilo
-- **Default**: Tarjeta estándar con borde sutil
-- **Elevated**: Tarjeta con sombra para destacar
-- **Outlined**: Tarjeta con borde más visible
-- **Filled**: Tarjeta con fondo de color
+- Basado en Bootstrap 5:
+  - **Default**: `card`
+  - **Elevated**: `card shadow`
+  - **Outlined**: `card border`
+  - **Filled**: `card bg-light` (o variantes de color)
 
 ## Estructura de la Tarjeta
 - **Header**: Título y subtítulo opcionales
@@ -44,7 +45,7 @@ Componente de tarjeta reutilizable para mostrar información estructurada en la 
 - **Focus management**: Manejo de foco
 
 ## Integración
-- Compatible con Tailwind CSS
+- Estilos con clases de Bootstrap 5
 - Soporte para iconos de Lucide React
 - Integración con React Router
 - Responsive design

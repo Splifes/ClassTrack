@@ -3,9 +3,9 @@
 Descripción de la configuración prevista de Vite:
 
 - Plugin: `@vitejs/plugin-react`
-- Server: puerto 3000, HMR habilitado
+- Server: puerto 5173, HMR habilitado
 - Build: `outDir` = `dist`, `sourcemap` en dev, minificación en prod
 - Variables VITE_* expuestas desde `.env` (solo listado documental)
-- Integración con Tailwind/PostCSS automáticamente por Vite
+- Sin integración de Tailwind/PostCSS en Opción A (se usa Bootstrap 5)
 
 Nota: No se incluye el archivo real; solo documentación.

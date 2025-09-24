@@ -4,7 +4,7 @@
 Componente de botón reutilizable con variantes y estados para la interfaz de usuario.
 
 ## Props Principales
-- **variant**: 'primary' | 'secondary' | 'outline' | 'ghost'
+- **variant**: 'primary' | 'secondary' | 'outline' | 'link'
 - **size**: 'sm' | 'md' | 'lg'
 - **disabled**: boolean
 - **loading**: boolean
@@ -12,10 +12,11 @@ Componente de botón reutilizable con variantes y estados para la interfaz de us
 - **onClick**: función de click
 
 ## Variantes de Estilo
-- **Primary**: Botón principal con fondo azul
-- **Secondary**: Botón secundario con fondo gris
-- **Outline**: Botón con borde y fondo transparente
-- **Ghost**: Botón sin fondo ni borde
+- Basado en Bootstrap 5:
+  - **Primary**: `btn btn-primary`
+  - **Secondary**: `btn btn-secondary`
+  - **Outline**: `btn btn-outline-*`
+  - **Link**: `btn btn-link`
 
 ## Tamaños
 - **Small**: 32px de altura, texto pequeño
@@ -39,7 +40,7 @@ Componente de botón reutilizable con variantes y estados para la interfaz de us
 - Se usa en formularios y acciones
 - Compatible con React Router
 - Soporte para iconos de Lucide React
-- Integración con Tailwind CSS
+- Estilos con clases de Bootstrap 5
 
 ## Ejemplos de Uso
 - Botones de acción en formularios
