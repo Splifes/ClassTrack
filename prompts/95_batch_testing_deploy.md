@@ -26,3 +26,19 @@ create_task({
   labels: ["prompt", "option-a", ...labelsExtra]
 })
 ```
+
+## Checklist de verificación (documental)
+
+- Smoke testing (ver `prompts/13_testing_smoke.md`)
+  - Rutas accesibles: `/`, `/courses`, `/students` (según rol), `/auth/callback`.
+  - Enlaces de navegación entre `Courses` → `CourseDetail` → `ClassDetail` (documental).
+  - Estados vacíos y de error presentes en tablas/comp.
+
+- Deploy (ver `prompts/14_deploy.md` y `prompts/22_deployment_devops.md`)
+  - MD-only: guía de despliegue como especificación, sin ejecutar.
+  - SPA fallback configurado en hosting (ver `docs/config/vite.md`).
+  - Variables `VITE_*` y URIs de backend documentadas (sin secretos).
+
+- Exportes
+  - Columnas mínimas para CSV y respeto de filtros activos (ver `docs/DATA_MODEL.md`).
+  - Encoding y formato de fecha definidos.

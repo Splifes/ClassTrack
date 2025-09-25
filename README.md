@@ -9,6 +9,8 @@ Este repositorio es solo documentación en Markdown. No contiene código ejecuta
 - Prompts por categoría: `prompts/INDEX_BY_CATEGORY.md`
 - Todos los prompts: carpeta `prompts/`
 - Arquitectura y diseño: `docs/ARCHITECTURE.md`, `docs/API_CONTRACTS.md`, `docs/DATA_MODEL.md`, `docs/wireframes.md`, `docs/user-flows.md`
+ - Notas ejecutivas de arquitectura: `ARCHITECTURE_NOTES.md`
+ - Guion de demo para jurados: `docs/JURY_BRIEF.md`
 
 ## Lineamientos
 - Mantener todo en formato `.md`.
@@ -18,6 +20,8 @@ Este repositorio es solo documentación en Markdown. No contiene código ejecuta
 - `README02.md`: Fuente de verdad del proyecto.
 - `prompts/INDEX_BY_CATEGORY.md`: Ejecutar por partes sin interferencias.
 - `docs/README.md`: Índice de documentación funcional y de diseño.
+ - `ARCHITECTURE_NOTES.md`: Decisiones clave y enlaces a checklists.
+ - `docs/JURY_BRIEF.md`: Pasos de demo y próximos pasos.
 
 ## Cómo usar los batches (paso a paso)
 

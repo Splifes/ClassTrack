@@ -106,3 +106,13 @@ Componentes por vista (comunes): `Card`, `Table`, `Badge`, `Spinner`, `Input/Sel
 - Estados: loading, empty (sin mensajes), error; indicador de conexión del chat (documental)
 - Accesibilidad: ARIA para listas de mensajes y formularios
 
+### Dashboard Coordinator (`/` con rol coordinator)
+- Secciones:
+  - KPIs globales: tarjetas con tasa de completitud, cursos con más atrasos, cohortes en riesgo
+  - Filtros avanzados: `Select(Cohorte)`, `Select(Curso)`, `Select(Docente)`, `Input/Select(Período)` con combinación
+  - Tablas comparativas: por cohorte/curso/docente con orden por mayor atraso/riesgo
+  - Tendencias: resumen temporal (documental)
+- Componentes: `Card`, `Badge`, `Table`, `Select`, `Input`, `Spinner`
+- Estados: loading, empty (sin datos), error; mensajes accionables
+- Accesibilidad: navegación por teclado entre filtros y tablas; foco visible y roles ARIA correctos
+

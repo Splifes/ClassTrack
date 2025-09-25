@@ -2,6 +2,8 @@
 
 Objetivo: vincular asistencia a eventos de clase en Google Calendar y reflejar presencia/ausencia.
 
+Nota MD-only: este repositorio documenta especificaciones. Si no hay backend y/o scopes de Calendar habilitados, usar mock/stub para `calendar` y `attendance` y documentar el comportamiento esperado.
+
 Instrucciones
 - Premisas:
   - Cada curso tiene eventos en Calendar (título o descripción referencian `courseId`).
@@ -13,7 +15,7 @@ Instrucciones
   - `src/hooks/useAttendance.ts`: hooks de lectura/escritura con React Query (optimistic updates).
   - UI: `src/pages/Attendance.tsx` con selector de curso/fecha y tabla de alumnos para marcar estado.
 - Integraciones
-  - Calendar: Lectura (Google Calendar API). Si no hubiera backend, se simula con mock/stub y se documenta.
+  - Calendar: Lectura (Google Calendar API). Si no hubiera backend o scopes, se simula con mock/stub y se documenta.
   - Classroom: Mapeo alumnos del curso para mostrar lista.
 - Aceptación
   - Visualizar eventos de clase por rango de fechas.
@@ -24,3 +26,6 @@ Instrucciones
 - Calidad
   - Tipos estrictos, errores claros, UI accesible.
   - No bloquear UI; optimistic updates + invalidaciones.
+
+Scopes (Roadmap)
+- Si se habilita Google Calendar real, documentar los scopes necesarios en `README02.md` y `docs/ENV_SETUP.md` y ajustar este prompt en consecuencia.

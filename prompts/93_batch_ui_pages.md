@@ -34,3 +34,20 @@ create_task({
 - Mapa de navegación y componentes por página documentado (Dashboard, Students, Courses) en `docs/design/COMPONENT_SPECS.md`.
 - Rutas esperadas alineadas con `prompts/02_app_shell_routing.md`.
 - Roles/vistas (`10_roles_views.md`) describen qué se muestra/oculta por rol a nivel de navegación y componentes sensibles.
+
+### Checklist por rol
+
+- Student
+  - Navegación: `/`, `/courses`, `/courses/:courseId`, `/courses/:courseId/classes/:classId`.
+  - Datos visibles: cursos propios, clases (courseWork), su submission por clase, chat de clase (widget externo).
+  - No ve `/students` global ni KPIs globales.
+
+- Teacher
+  - Navegación: `/`, `/courses`, `/students?courseId=XYZ`, `/courses/:courseId/classes/:classId`.
+  - Datos visibles: cursos asignados, estudiantes de sus cursos, entregas por clase; exporte CSV por curso.
+  - No ve KPIs globales ni estudiantes fuera de sus cursos.
+
+- Coordinator
+  - Navegación: `/`, `/courses`, `/students` (global).
+  - Datos visibles: KPIs globales, tablas comparativas con filtros por cohorte/curso/docente/período; exporte global CSV.
+  - Puede ver vistas agregadas, no datos sensibles innecesarios.

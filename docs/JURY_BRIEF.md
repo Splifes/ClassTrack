@@ -41,11 +41,17 @@
 - Reportes avanzados y exportables.
 
 ## Demo (1–2 minutos)
-1) Login con Google (server-side, backend Flask) → email del usuario en Navbar.
-2) Dashboard: métricas generales; abrir Students.
-3) Students: filtros por cohorte/profesor/estado; ver progreso y entregas.
-4) Courses: lista de cursos/profesores.
-5) (Opcional) Notificaciones/Asistencia/Reportes si hay tiempo.
+1) Roles y navegación (MD-only)
+   - Abrir `docs/design/ROLES_VIEWS.md` → tablas Rutas×Roles y Datos×Roles (student/teacher/coordinator).
+2) Flujo Student (Courses → CourseDetail → ClassDetail)
+   - `prompts/02_app_shell_routing.md` confirma rutas `/courses/:courseId` y `/courses/:courseId/classes/:classId`.
+   - En `ClassDetail`, mostrar panel de chat (widget externo) y convención `roomId = ${courseId}-${classId}`.
+3) Teacher: exporte por curso
+   - `docs/DATA_MODEL.md` → columnas mínimas CSV (Teacher). `prompts/94_batch_features.md` checklist de exportes.
+4) Coordinator: KPIs y filtros
+   - `docs/design/COMPONENT_SPECS.md` → “Dashboard Coordinator” (KPIs, filtros avanzados y tablas comparativas).
+5) Testing/Deploy (documental)
+   - `prompts/95_batch_testing_deploy.md` → smoke routing, SPA fallback (`docs/config/vite.md`), variables `VITE_*` (`docs/config/env.md`).
 
 ## Limitaciones (transparentes)
 - Backend mínimo (Flask) sin persistencia propia; la app opera en modo lectura con Google Classroom.
@@ -55,3 +61,4 @@
 - Persistencia (DB) y webhooks/notificaciones.
 - Canal de notificaciones real y almacenamiento histórico.
 - Mejorar analítica y modelos de riesgo.
+ - Calendar real (scopes) y chat tiempo real (Flask-SocketIO) como roadmap.

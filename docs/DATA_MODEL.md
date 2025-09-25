@@ -37,3 +37,37 @@ Este documento describe las entidades y relaciones necesarias para el MVP.
 ## Ejemplos (no JSON ejecutable)
 - `Course`: "Intro a JS", section "Cohorte A"
 - `Submission`: TURNED_IN y `late=true` ⇒ cuenta como entregado tarde.
+
+## Columnas mínimas para exportes CSV (documental)
+
+### Exporte por curso (Teacher)
+- `courseId`
+- `courseName`
+- `studentEmail`
+- `studentFullName`
+- `assignmentId` (courseWorkId)
+- `assignmentTitle`
+- `dueDate`
+- `submissionState` (CREATED|TURNED_IN|RETURNED|RECLAIMED_BY_STUDENT)
+- `late` (true/false)
+- `assignedGrade` (opcional)
+- `updatedAt`
+
+### Exporte global (Coordinator)
+- `cohort`
+- `courseId`
+- `courseName`
+- `teacherEmails` (lista separada por `;`)
+- `studentEmail`
+- `studentFullName`
+- `assignmentId`
+- `assignmentTitle`
+- `dueDate`
+- `submissionState`
+- `late`
+- `assignedGrade` (opcional)
+- `updatedAt`
+
+Notas:
+- Respetar filtros activos (cohorte/curso/docente/período) al generar CSV.
+- Formato de fecha ISO 8601 recomendado.

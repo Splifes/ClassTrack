@@ -129,6 +129,16 @@ Notas:
 - Estados vacíos/errores definidos (sin alumnos, sin entregas, error de red).
 - Accesibilidad en tablas y navegación por teclado.
 
+## Mejoras recomendadas — Coordinator (documental)
+
+- KPIs globales destacados: tasa de completitud general, cursos con más atrasos, cohortes en riesgo.
+- Filtros avanzados: cohorte, curso, docente y período (mensual/semanal), con combinación de filtros.
+- Vistas agregadas: comparativas por cohorte/curso/docente y tendencias temporales (documental).
+- Exportes globales (CSV): respetar filtros aplicados; definir columnas mínimas en `docs/DATA_MODEL.md`.
+- Alertas priorizadas: ranking de cursos/cohortes con mayor atraso.
+- Estados vacíos/errores definidos y mensajes accionables.
+- Accesibilidad: navegación por teclado en filtros/tablas, foco y roles ARIA correctos.
+
 ## Datos y Contratos (Option A)
 
 - Endpoints base (backend, ver `docs/API_CONTRACTS.md`)
