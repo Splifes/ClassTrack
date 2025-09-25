@@ -1,0 +1,9 @@
+:root {
+  --brand: #0d6efd;
+}
+
+html, body, #root { height: 100%; }
+
+main a { color: var(--brand); }
+
+.container-narrow { max-width: 960px; }

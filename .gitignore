@@ -1,0 +1,389 @@
+# ClassTrack - Git Ignore File
+
+# ================================
+# ARCHIVOS SENSIBLES - NUNCA COMMITEAR
+# ================================
+
+# Variables de entorno con credenciales
+.env
+.env.local
+.env.production
+.env.development
+backend/.env
+frontend/.env
+
+# Credenciales y tokens
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+service-account.json
+google-credentials.json
+
+# Configuraciones locales
+config/local.json
+config/production.json
+
+# ================================
+# FRONTEND (React + Vite)
+# ================================
+
+# Dependencias
+frontend/node_modules/
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+frontend/pnpm-debug.log*
+frontend/lerna-debug.log*
+
+# Build outputs
+frontend/dist/
+frontend/dist-ssr/
+frontend/build/
+frontend/.vite/
+
+# Cache
+frontend/.cache/
+frontend/.parcel-cache/
+frontend/.next/
+frontend/out/
+
+# Logs
+frontend/logs/
+frontend/*.log
+
+# Runtime data
+frontend/pids/
+frontend/*.pid
+frontend/*.seed
+frontend/*.pid.lock
+
+# Coverage directory used by tools like istanbul
+frontend/coverage/
+frontend/.nyc_output/
+
+# ESLint cache
+frontend/.eslintcache
+
+# Optional npm cache directory
+frontend/.npm
+
+# Optional eslint cache
+frontend/.eslintcache
+
+# Microbundle cache
+frontend/.rpt2_cache/
+frontend/.rts2_cache_cjs/
+frontend/.rts2_cache_es/
+frontend/.rts2_cache_umd/
+
+# Optional REPL history
+frontend/.node_repl_history
+
+# Output of 'npm pack'
+frontend/*.tgz
+
+# Yarn Integrity file
+frontend/.yarn-integrity
+
+# dotenv environment variables file
+frontend/.env.test
+
+# Stores VSCode versions used for testing VSCode extensions
+frontend/.vscode-test
+
+# ================================
+# BACKEND (Python + Flask)
+# ================================
+
+# Python
+backend/__pycache__/
+backend/*.py[cod]
+backend/*$py.class
+backend/*.so
+backend/.Python
+backend/build/
+backend/develop-eggs/
+backend/dist/
+backend/downloads/
+backend/eggs/
+backend/.eggs/
+backend/lib/
+backend/lib64/
+backend/parts/
+backend/sdist/
+backend/var/
+backend/wheels/
+backend/pip-wheel-metadata/
+backend/share/python-wheels/
+backend/*.egg-info/
+backend/.installed.cfg
+backend/*.egg
+backend/MANIFEST
+
+# Virtual environments
+backend/.venv/
+backend/venv/
+backend/ENV/
+backend/env/
+backend/.env/
+
+# Flask
+backend/instance/
+backend/.webassets-cache
+
+# Database
+backend/*.db
+backend/*.sqlite
+backend/*.sqlite3
+backend/database.db
+
+# Migrations (si usas Flask-Migrate)
+backend/migrations/versions/*.py
+!backend/migrations/versions/__init__.py
+
+# Logs
+backend/logs/
+backend/*.log
+backend/app.log
+
+# Cache
+backend/.pytest_cache/
+backend/.coverage
+backend/htmlcov/
+
+# Jupyter Notebook
+backend/.ipynb_checkpoints
+
+# IPython
+backend/profile_default/
+backend/ipython_config.py
+
+# pyenv
+backend/.python-version
+
+# pipenv
+backend/Pipfile.lock
+
+# PEP 582
+backend/__pypackages__/
+
+# Celery stuff
+backend/celerybeat-schedule
+backend/celerybeat.pid
+
+# SageMath parsed files
+backend/*.sage.py
+
+# Spyder project settings
+backend/.spyderproject
+backend/.spyproject
+
+# Rope project settings
+backend/.ropeproject
+
+# mkdocs documentation
+backend/site
+
+# mypy
+backend/.mypy_cache/
+backend/.dmypy.json
+backend/dmypy.json
+
+# Pyre type checker
+backend/.pyre/
+
+# ================================
+# SISTEMA OPERATIVO
+# ================================
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# ================================
+# EDITORES E IDEs
+# ================================
+
+# VSCode
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+# JetBrains IDEs
+.idea/
+*.swp
+*.swo
+*~
+
+# Sublime Text
+*.tmlanguage.cache
+*.tmPreferences.cache
+*.stTheme.cache
+*.sublime-workspace
+*.sublime-project
+
+# Vim
+[._]*.s[a-v][a-z]
+[._]*.sw[a-p]
+[._]s[a-rt-v][a-z]
+[._]ss[a-gi-z]
+[._]sw[a-p]
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# ================================
+# TESTING Y QA
+# ================================
+
+# Test coverage
+coverage/
+.coverage
+.coverage.*
+lcov.info
+*.lcov
+
+# Jest
+jest_coverage/
+
+# Cypress
+cypress/videos/
+cypress/screenshots/
+
+# ================================
+# DEPLOYMENT Y CI/CD
+# ================================
+
+# Netlify
+.netlify/
+
+# Vercel
+.vercel/
+
+# Docker
+.dockerignore
+Dockerfile.local
+
+# Terraform
+*.tfstate
+*.tfstate.*
+.terraform/
+.terraform.lock.hcl
+
+# ================================
+# ARCHIVOS TEMPORALES
+# ================================
+
+# Logs generales
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Archivos temporales
+tmp/
+temp/
+.tmp/
+.temp/
+
+# Backups
+*.bak
+*.backup
+*.old
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+
+# ================================
+# ESPECÍFICOS DEL PROYECTO
+# ================================
+
+# Datos de prueba generados
+test-data/
+mock-data/
+sample-exports/
+
+# Documentación generada
+docs/build/
+docs/_build/
+
+# Archivos de configuración local
+local-config.json
+dev-settings.json
+
+# Exports y reportes generados
+exports/
+reports/
+*.csv
+*.xlsx
+*.pdf
+
+# Cache de aplicación
+.cache/
+cache/
+
+# Uploads de usuarios (si los hay)
+uploads/
+user-files/
+
+# ================================
+# COMENTARIOS ÚTILES
+# ================================
+
+# Para incluir archivos específicos que normalmente se ignorarían:
+# !important-file.log
+
+# Para ignorar todo en una carpeta excepto un archivo:
+# folder/*
+# !folder/keep-this-file.txt

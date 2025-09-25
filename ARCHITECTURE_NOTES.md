@@ -1,21 +1,18 @@
-# Architecture Notes — ClassTrack (MD-only)
+# Architecture Notes — ClassTrack (Implementación Opción A)
 
-Este documento resume las decisiones clave y enlaces para navegar la documentación del MVP. El repositorio es 100% Markdown (MD-only); todo es especificación, no código ejecutable.
-
+Este documento resume las decisiones clave y enlaces para navegar la documentación del MVP. El repositorio ahora incluye documentación y código ejecutable conforme a la Opción A.
 ## Fuente de verdad
 - `README02.md` — guía canónica del proyecto (Option A: Frontend + Backend Flask + OAuth server-side)
 - `README.md` — entrada rápida y navegación
 
 ## Principios
-- MD-only: no se incluyen archivos ejecutables; describimos contratos, rutas, flujos y UI.
-- Option A: Frontend (Vite + React + TS + Bootstrap 5) y Backend (Flask) como proxy de Google Classroom API.
-- Seguridad: OAuth 2.0 Authorization Code en backend; el frontend nunca maneja tokens de Google.
+ - Implementación Opción A: Frontend (Vite + React + TS + Bootstrap 5) y Backend (Flask) como proxy de Google Classroom API.
+ - Seguridad: OAuth 2.0 Authorization Code en backend; el frontend no maneja tokens de Google.
 
 ## Rutas y navegación (SPA)
 - `/`, `/courses`, `/students` (según rol)
 - `/courses/:courseId`, `/courses/:courseId/classes/:classId`
 - `/auth/callback` (retorno OAuth → `GET /api/auth/me`)
-- Referencias:
   - `prompts/02_app_shell_routing.md`
   - `docs/design/ROLES_VIEWS.md` (matrices Rutas×Roles y Datos×Roles)
   - `docs/config/vite.md` (fallback SPA)
@@ -41,10 +38,11 @@ Este documento resume las decisiones clave y enlaces para navegar la documentaci
   - 90 (Setup), 91 (Auth/Backend), 92 (Frontend Data), 93 (UI/Páginas), 94 (Features), 95 (Testing/Deploy), 96 (Theming), 97 (DB/Roadmap)
 - Cada batch incluye checklist documental para validar consistencia.
 
-## Configuración (documental)
-- `docs/config/env.md` — variables `VITE_*` (frontend) y backend; sin secretos
-- `docs/config/vite.md` — `@vitejs/plugin-react`, puerto 5173, fallback SPA
-- `docs/config/overview.md` — stack Option A y enlaces a prompts
+## Configuración
+ - `docs/config/env.md` — variables `VITE_*` (frontend) y backend; sin secretos
+ - `docs/config/vite.md` — `@vitejs/plugin-react`, puerto 5173, fallback SPA
+ - `docs/config/overview.md` — stack Option A y enlaces a prompts
+ - Ver archivos reales del proyecto en la raíz (Vite/TypeScript) y `backend/` (Flask).
 
 ## Riesgos y Roadmap
 - Calendar real: requiere scopes; actualmente documentado con mock/stub

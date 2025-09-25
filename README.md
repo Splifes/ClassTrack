@@ -1,6 +1,6 @@
-# ClassTrack — Fuente de Verdad (MD-only)
+# ClassTrack — Fuente de Verdad (implementación Opción A)
 
-Este repositorio es solo documentación en Markdown. No contiene código ejecutable. La guía canónica del proyecto es `README02.md`.
+Este repositorio contiene documentación y código ejecutable. La guía canónica del proyecto es `README02.md`.
 
 ## Canonical brief
 - Ver `README02.md` (consignas y flujo completo del proyecto Option A: Frontend + Backend Flask). Este documento describe el setup y la arquitectura, pero recuerde: en este repo solo se documenta, no se incluye código.
@@ -13,8 +13,8 @@ Este repositorio es solo documentación en Markdown. No contiene código ejecuta
  - Guion de demo para jurados: `docs/JURY_BRIEF.md`
 
 ## Lineamientos
-- Mantener todo en formato `.md`.
-- Cuando un documento refiera a comandos o archivos (p. ej. Vite/Flask), se consideran especificaciones para implementación futura, no archivos presentes en este repo.
+- La documentación permanece en formato `.md` junto al código ejecutable.
+- Cuando un documento refiera a comandos o archivos (p. ej. Vite/Flask), existen implementaciones básicas en este repo conforme a la Opción A.
 
 ## Índice útil
 - `README02.md`: Fuente de verdad del proyecto.
@@ -31,3 +31,9 @@ Este repositorio es solo documentación en Markdown. No contiene código ejecuta
 4. Desde la fila de tareas, correr cada prompt en orden y validar con los checklists de `README02.md`.
 
 Sugerencia de orden inicial: `90_batch_setup.md` → `91_batch_auth_backend.md` → `92/93/94` según foco.
+
+## Despliegue y CI
+
+- Plan de despliegue consolidado: `docs/DEPLOYMENT_PLAN.md`
+- Pipeline de CI (documental): `docs/CI_PIPELINE.md`
+- Configuración de hosting (documental): `docs/config/netlify.toml.md`, `docs/config/vercel.json.md`
