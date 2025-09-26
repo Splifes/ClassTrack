@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 export function useApi<T>(apiCall: () => Promise<T>, deps: any[] = []) {
   const [data, setData] = useState<T | null>(null)
   const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
+  const [error, setError] = useState<Error | null>(null)
 
   useEffect(() => {
     let cancelled = false
@@ -17,8 +17,9 @@ export function useApi<T>(apiCall: () => Promise<T>, deps: any[] = []) {
           setData(result)
         }
       } catch (err: any) {
+        console.error("API call failed:", err); // Debugging más explícito
         if (!cancelled) {
-          setError(err.message)
+          setError(err as Error)
           setData(null)
         }
       } finally {
@@ -42,7 +43,7 @@ export function useApi<T>(apiCall: () => Promise<T>, deps: any[] = []) {
       const result = await apiCall()
       setData(result)
     } catch (err: any) {
-      setError(err.message)
+      setError(err as Error)
       setData(null)
     } finally {
       setLoading(false)

@@ -159,7 +159,7 @@ export default function Students() {
                   </td>
                   <td>{student.profile.emailAddress}</td>
                   <td>
-                    <span className="badge bg-primary">{(student as any).courseName}</span>
+                    <span className="badge bg-primary">{student.courseName}</span>
                   </td>
                   <td>
                     <div className="btn-group btn-group-sm">

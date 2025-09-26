@@ -6,11 +6,22 @@ import { RoleGuard } from './components/guards/RoleGuard'
 import { NotificationBell } from './components/notifications/NotificationBell'
 import Dashboard from './routes/Dashboard'
 import Students from './routes/Students'
-import Courses from './routes/Courses'
+import Courses from './routes/Courses';
+import StudentCoursesPage from './routes/courses/StudentCoursesPage';
+import TeacherCoursesPage from './routes/courses/TeacherCoursesPage';
+import CoordinatorCoursesPage from './routes/courses/CoordinatorCoursesPage';
 import CourseDetail from './routes/CourseDetail'
 import ClassDetail from './routes/ClassDetail'
 import AuthCallback from './routes/AuthCallback'
 import Reports from './routes/Reports'
+import StudentDashboard from './routes/StudentDashboard'
+import TeacherDashboard from './routes/TeacherDashboard'
+import CoordinatorDashboard from './routes/CoordinatorDashboard'
+import HomeRedirector from './routes/HomeRedirector'
+import SettingsPage from './pages/SettingsPage'
+import WhatsappAdminPage from './pages/WhatsappAdminPage'
+import { AttendancePage } from './features/attendance'
+import { StudentCheckIn } from './pages/StudentCheckIn'
 
 export default function App() {
   // Use mock auth in development, real auth in production
@@ -75,6 +86,12 @@ export default function App() {
                     </li>
                   </>
                 )}
+                {/* Hardcoded access for testing - remove in production */}
+                <li className="nav-item">
+                  <NavLink className={({isActive}) => `nav-link ${isActive ? 'active' : ''} text-warning`} to="/coordinator-dashboard">
+                    🔧 Coordinator Panel (TEST)
+                  </NavLink>
+                </li>
               </ul>
             )}
             <div className="d-flex align-items-center">
@@ -84,27 +101,19 @@ export default function App() {
                     <img src={user.picture} alt={user.name} className="rounded-circle me-2" width="32" height="32" />
                   )}
                   <div className="me-3">
-                    <span className="text-light d-block">{user?.name}</span>
+                    <span className="navbar-text d-block">{user?.name}</span>
                     <small className="text-muted">
-                      Role: <span className={`badge ${
-                        user?.role === 'coordinator' ? 'bg-danger' :
-                        user?.role === 'teacher' ? 'bg-success' :
-                        'bg-info'
-                      }`}>
+                      Role: <span className={`badge ${user?.role === 'coordinator' ? 'bg-danger' : user?.role === 'teacher' ? 'bg-success' : 'bg-info'}`}>
                         {user?.role}
                       </span>
                     </small>
                   </div>
-                  {/* Development role switcher */}
                   {import.meta.env.VITE_APP_ENV === 'development' && (
                     <select 
                       className="form-select form-select-sm me-2" 
                       style={{ width: 'auto' }}
                       value={user?.role || 'student'}
-                      onChange={(e) => {
-                        setRole(e.target.value as any)
-                        window.location.reload()
-                      }}
+                      onChange={(e) => { setRole(e.target.value as any); window.location.reload(); }}
                     >
                       <option value="student">Student</option>
                       <option value="teacher">Teacher</option>
@@ -112,12 +121,27 @@ export default function App() {
                     </select>
                   )}
                   <NotificationBell />
-                  <button className="btn btn-outline-light ms-2" onClick={logout}>
-                    Logout
-                  </button>
+                  <div className="nav-item dropdown ms-2">
+                    <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      <i className="bi bi-gear"></i>
+                    </a>
+                    <ul className="dropdown-menu dropdown-menu-end">
+                      <li><Link className="dropdown-item" to="/settings">Settings</Link></li>
+                      <li><hr className="dropdown-divider" /></li>
+                      <li>
+                        <button 
+                          className="dropdown-item text-danger" 
+                          onClick={logout}
+                          disabled={loading}
+                        >
+                          {loading ? 'Logging out...' : 'Logout'}
+                        </button>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
               ) : (
-                <button className="btn btn-outline-light" onClick={login}>
+                <button className="btn btn-primary" onClick={login}>
                   Login with Google
                 </button>
               )}
@@ -125,72 +149,53 @@ export default function App() {
           </div>
         </div>
       </nav>
-      {/* Development Mode Banner */}
+
       {useDevelopmentAuth && (
         <div className="alert alert-info alert-dismissible fade show m-0 rounded-0" role="alert">
           <div className="container-fluid">
-            <strong>🚧 Development Mode:</strong> Using mock authentication. 
-            {isAuthenticated && (
-              <span> Change roles with the selector in navbar. </span>
-            )}
-            To use real Google OAuth, see <code>OAUTH_SETUP.md</code>
+            <strong>🚧 Development Mode:</strong> Using mock authentication.
           </div>
         </div>
       )}
-      
-      <main className="container py-4 flex-grow-1">
-        {!isAuthenticated ? (
-          <div className="text-center py-5">
-            <h1>Welcome to ClassTrack</h1>
-            <p className="lead">
-              {useDevelopmentAuth 
-                ? "Click below to start exploring with mock data"
-                : "Please login with your Google account to access your classroom data"
-              }
-            </p>
-            <button className="btn btn-primary btn-lg" onClick={login}>
-              {useDevelopmentAuth ? "Start Demo" : "Login with Google"}
-            </button>
-          </div>
-        ) : (
-          <Routes>
-            <Route path="/" element={<Dashboard />} />
-            <Route 
-              path="/students" 
-              element={
-                <RoleGuard allowed={['teacher', 'coordinator']}>
-                  <Students />
-                </RoleGuard>
-              } 
-            />
-            <Route path="/courses" element={<Courses />} />
-            <Route path="/courses/:courseId" element={<CourseDetail />} />
-            <Route path="/courses/:courseId/classes/:classId" element={<ClassDetail />} />
-            <Route 
-              path="/reports" 
-              element={
-                <RoleGuard allowed={['coordinator']}>
-                  <Reports />
-                </RoleGuard>
-              } 
-            />
-            <Route 
-              path="/attendance" 
-              element={
-                <RoleGuard allowed={['teacher', 'coordinator']}>
-                  <div className="container py-5">
-                    <h1>Attendance</h1>
-                    <p className="text-muted">Attendance management (Coming Soon)</p>
-                  </div>
-                </RoleGuard>
-              } 
-            />
-            <Route path="/auth/callback" element={<AuthCallback />} />
-          </Routes>
-        )}
+
+      <main className="py-4 flex-grow-1">
+        <div className="container">
+          {!isAuthenticated ? (
+            <div className="text-center py-5">
+              <h1>Welcome to ClassTrack</h1>
+              <p className="lead">Please login to continue.</p>
+              <button className="btn btn-primary btn-lg" onClick={login}>
+                Login with Google
+              </button>
+            </div>
+          ) : (
+            <Routes>
+              <Route path="/" element={<HomeRedirector />} />
+              <Route path="/students" element={<RoleGuard allowed={['teacher', 'coordinator']}><Students /></RoleGuard>} />
+              <Route path="/courses" element={<Courses />} />
+              <Route path="/courses/student" element={<StudentCoursesPage />} />
+              <Route path="/courses/teacher" element={<RoleGuard allowed={['teacher', 'coordinator']}><TeacherCoursesPage /></RoleGuard>} />
+              <Route path="/courses/coordinator" element={<RoleGuard allowed={['coordinator']}><CoordinatorCoursesPage /></RoleGuard>} />
+              <Route path="/courses/:courseId" element={<CourseDetail />} />
+              <Route path="/courses/:courseId/classes/:classId" element={<ClassDetail />} />
+              <Route path="/reports" element={<RoleGuard allowed={['coordinator']}><Reports /></RoleGuard>} />
+              <Route path="/courses/:courseId/attendance" element={<RoleGuard allowed={['teacher', 'coordinator']}><AttendancePage /></RoleGuard>} />
+              <Route path="/check-in/:token" element={<StudentCheckIn />} />
+              <Route path="/auth/callback" element={<AuthCallback />} />
+              <Route path="/student-dashboard" element={<StudentDashboard />} />
+              <Route path="/teacher-dashboard" element={<TeacherDashboard />} />
+              <Route path="/coordinator-dashboard" element={<CoordinatorDashboard />} />
+              <Route path="/settings" element={<SettingsPage />} />
+              <Route path="/admin/whatsapp" element={<WhatsappAdminPage />} />
+            </Routes>
+          )}
+        </div>
       </main>
-      <footer className="bg-light border-top py-3">
-        <div className="container text-muted small">© {new Date().getFullYear()} ClassTrack</div>
+
+      <footer className="border-top py-3 mt-auto">
+        <div className="container text-center text-muted small">
+          © {new Date().getFullYear()} ClassTrack
+        </div>
       </footer>
     </div>
   )

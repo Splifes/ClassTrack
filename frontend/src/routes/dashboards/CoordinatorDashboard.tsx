@@ -1,16 +1,124 @@
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom'
 import { useApi } from '../../hooks/useApi'
 import { useProgressMetrics } from '../../hooks/useProgressMetrics'
 import { useRiskFlags, useHighRiskStudents } from '../../hooks/useRiskFlags'
 import { api } from '../../services/api'
+import { useEffect } from 'react'
 import { useAuth } from '../../hooks/useAuth'
-import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui'
-import { Badge } from '../../components/ui'
+import { Card, CardContent, CardHeader, CardTitle } from '../../shared/components/ui'
+import { Badge } from '../../shared/components/ui'
+import CourseMetricsGrid from '../../components/coordinator/CourseMetricsGrid'
+import TeacherEffectivenessPanel from '../../components/coordinator/TeacherEffectivenessPanel'
+import MockDataBanner from '../../components/coordinator/MockDataBanner'
 
 export default function CoordinatorDashboard() {
   const { user } = useAuth()
   const { data: courses, loading: coursesLoading } = useApi(() => api.getCourses())
   const { data: students, loading: studentsLoading } = useApi(() => api.getAllStudents())
+  const { data: coordinatorAnalytics, loading: analyticsLoading, error: analyticsError } = useApi(() => api.getCoordinatorAnalytics())
+  
+  // Local state for mock data fallback
+  const [useMockData, setUseMockData] = useState(false)
+  const [mockAnalytics, setMockAnalytics] = useState<any>(null)
+  
+  // Load mock data function
+  const loadMockData = () => {
+    const mockData = {
+      institution_overview: {
+        total_courses: 24,
+        active_courses: 18,
+        total_teachers: 12,
+        total_students: 456,
+        courses_per_teacher: 1.5,
+        students_per_course: 25.3
+      },
+      course_metrics: [
+        {
+          course_id: "course_001",
+          course_name: "Matemáticas Avanzadas",
+          teacher_name: "Prof. Ana García",
+          teacher_email: "ana.garcia@escuela.edu",
+          student_count: 28,
+          assignment_count: 15,
+          average_grade: 78.5,
+          submission_rate: 85.2,
+          on_time_rate: 72.1,
+          risk_level: "medium",
+          issues: ["Algunas entregas tardías"],
+          grade_distribution: { excellent: 25.0, good: 42.9, regular: 21.4, poor: 10.7 }
+        },
+        {
+          course_id: "course_003",
+          course_name: "Química Orgánica",
+          teacher_name: "Prof. María López",
+          teacher_email: "maria.lopez@escuela.edu",
+          student_count: 24,
+          assignment_count: 18,
+          average_grade: 65.8,
+          submission_rate: 68.5,
+          on_time_rate: 52.3,
+          risk_level: "high",
+          issues: ["Promedio muy bajo", "Baja tasa de entregas"],
+          grade_distribution: { excellent: 8.3, good: 20.8, regular: 37.5, poor: 33.4 }
+        }
+      ],
+      teacher_metrics: [
+        {
+          teacher_name: "Prof. Carlos Rodríguez",
+          teacher_email: "carlos.rodriguez@escuela.edu",
+          total_courses: 1,
+          course_names: ["Historia Mundial"],
+          total_students: 32,
+          average_class_performance: 92.3,
+          workload_level: "moderate",
+          performance_level: "excellent"
+        },
+        {
+          teacher_name: "Prof. María López",
+          teacher_email: "maria.lopez@escuela.edu",
+          total_courses: 3,
+          course_names: ["Química Orgánica", "Química General"],
+          total_students: 78,
+          average_class_performance: 65.8,
+          workload_level: "high",
+          performance_level: "needs_improvement"
+        }
+      ],
+      alerts: [
+        {
+          type: "course_risk",
+          severity: "high",
+          title: "Curso de alto riesgo: Química Orgánica",
+          description: "Promedio: 65.8%, Tasa de entregas: 68.5%",
+          action_required: true
+        },
+        {
+          type: "teacher_overload",
+          severity: "medium",
+          title: "Profesor con carga alta: Prof. María López",
+          description: "78 estudiantes en 3 cursos",
+          action_required: true
+        }
+      ]
+    }
+    setMockAnalytics(mockData)
+    setUseMockData(true)
+  }
+  
+  // Use mock data if enabled or if there's an error
+  const displayAnalytics = useMockData ? mockAnalytics : coordinatorAnalytics
+  
+  // Debug logging
+  console.log('CoordinatorDashboard Debug:', {
+    coordinatorAnalytics,
+    analyticsLoading,
+    analyticsError,
+    useMockData,
+    displayAnalytics,
+    courses,
+    students
+  })
   
   // Use domain hooks for metrics
   const progressMetrics = useProgressMetrics()
@@ -59,6 +167,9 @@ export default function CoordinatorDashboard() {
           />
         )}
       </div>
+
+      {/* Mock Data Banner */}
+      <MockDataBanner />
 
       {/* Global Stats */}
       <div className="row mb-4">
@@ -371,6 +482,181 @@ export default function CoordinatorDashboard() {
           </div>
         </div>
       </div>
+
+      {/* New Analytics Sections */}
+      {displayAnalytics && (
+        <>
+          {/* Enhanced Institution Overview */}
+          {displayAnalytics.institution_overview && (
+            <div className="row mb-4">
+              <div className="col-12">
+                <div className="card">
+                  <div className="card-header">
+                    <h5 className="mb-0">🏫 Resumen Institucional Detallado</h5>
+                  </div>
+                  <div className="card-body">
+                    <div className="row text-center">
+                      <div className="col-md-2">
+                        <h4 className="text-primary">{displayAnalytics.institution_overview.total_courses}</h4>
+                        <small className="text-muted">Total Cursos</small>
+                      </div>
+                      <div className="col-md-2">
+                        <h4 className="text-success">{displayAnalytics.institution_overview.active_courses}</h4>
+                        <small className="text-muted">Cursos Activos</small>
+                      </div>
+                      <div className="col-md-2">
+                        <h4 className="text-info">{displayAnalytics.institution_overview.total_teachers}</h4>
+                        <small className="text-muted">Profesores</small>
+                      </div>
+                      <div className="col-md-2">
+                        <h4 className="text-warning">{displayAnalytics.institution_overview.total_students}</h4>
+                        <small className="text-muted">Estudiantes</small>
+                      </div>
+                      <div className="col-md-2">
+                        <h4 className="text-secondary">{displayAnalytics.institution_overview.courses_per_teacher}</h4>
+                        <small className="text-muted">Cursos/Profesor</small>
+                      </div>
+                      <div className="col-md-2">
+                        <h4 className="text-dark">{displayAnalytics.institution_overview.students_per_course}</h4>
+                        <small className="text-muted">Estudiantes/Curso</small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Course Metrics Grid */}
+          {displayAnalytics.course_metrics && (
+            <div className="row mb-4">
+              <div className="col-12">
+                <CourseMetricsGrid 
+                  courses={displayAnalytics.course_metrics} 
+                  loading={analyticsLoading && !useMockData}
+                />
+              </div>
+            </div>
+          )}
+
+          {/* Teacher Effectiveness Panel */}
+          {displayAnalytics.teacher_metrics && (
+            <div className="row mb-4">
+              <div className="col-12">
+                <TeacherEffectivenessPanel 
+                  teachers={displayAnalytics.teacher_metrics} 
+                  loading={analyticsLoading && !useMockData}
+                />
+              </div>
+            </div>
+          )}
+
+          {/* Enhanced Alerts Panel */}
+          {displayAnalytics.alerts && displayAnalytics.alerts.length > 0 && (
+            <div className="row mb-4">
+              <div className="col-12">
+                <div className="card">
+                  <div className="card-header">
+                    <h5 className="mb-0">🚨 Alertas Críticas del Sistema</h5>
+                  </div>
+                  <div className="card-body">
+                    <div className="list-group list-group-flush">
+                      {coordinatorAnalytics.alerts.slice(0, 10).map((alert: any, index: number) => (
+                        <div key={index} className="list-group-item">
+                          <div className="d-flex justify-content-between align-items-start">
+                            <div className="d-flex">
+                              <div className="me-3">
+                                {alert.severity === 'high' && (
+                                  <svg width="20" height="20" fill="red" viewBox="0 0 16 16">
+                                    <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                                  </svg>
+                                )}
+                                {alert.severity === 'medium' && (
+                                  <svg width="20" height="20" fill="orange" viewBox="0 0 16 16">
+                                    <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                                  </svg>
+                                )}
+                              </div>
+                              <div>
+                                <h6 className="mb-1">{alert.title}</h6>
+                                <p className="mb-1 text-muted small">{alert.description}</p>
+                                <small className={`badge bg-${alert.severity === 'high' ? 'danger' : 'warning'}`}>
+                                  {alert.type.replace('_', ' ').toUpperCase()}
+                                </small>
+                              </div>
+                            </div>
+                            {alert.action_required && (
+                              <button className="btn btn-outline-primary btn-sm">
+                                Revisar
+                              </button>
+                            )}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+        </>
+      )}
+
+      {analyticsLoading && (
+        <div className="row mb-4">
+          <div className="col-12">
+            <div className="card">
+              <div className="card-body text-center">
+                <div className="spinner-border" role="status">
+                  <span className="visually-hidden">Cargando analytics avanzados...</span>
+                </div>
+                <p className="mt-2 text-muted">Analizando datos de Google Classroom...</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {analyticsError && (
+        <div className="row mb-4">
+          <div className="col-12">
+            <div className="alert alert-danger">
+              <h6>Error al cargar analytics</h6>
+              <p className="mb-2">
+                <strong>Error:</strong> {analyticsError.message || 'Error desconocido'}
+              </p>
+              <small className="text-muted d-block mb-3">
+                Endpoint: /api/courses/coordinator/analytics
+              </small>
+              <button 
+                className="btn btn-warning btn-sm"
+                onClick={loadMockData}
+              >
+                📊 Cargar Datos de Demostración
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {!analyticsLoading && !analyticsError && !coordinatorAnalytics && !useMockData && (
+        <div className="row mb-4">
+          <div className="col-12">
+            <div className="alert alert-warning">
+              <h6>No se pudieron cargar los datos de analytics</h6>
+              <p className="mb-2">
+                Los datos de coordinador no están disponibles. Verifica que el servidor esté funcionando.
+              </p>
+              <button 
+                className="btn btn-primary btn-sm"
+                onClick={loadMockData}
+              >
+                📊 Ver Datos de Demostración
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

@@ -24,15 +24,30 @@ export default function AuthCallback() {
         // Wait a moment for the backend to process the callback
         await new Promise(resolve => setTimeout(resolve, 1000))
         
-        // Check authentication status
-        await checkAuth()
-        setStatus('success')
-        setMessage('Authentication successful! Redirecting...')
-        
-        // Redirect to dashboard after a short delay
-        setTimeout(() => {
-          navigate('/')
-        }, 2000)
+        // Check authentication status and get user data
+        const user = await checkAuth();
+
+        if (user) {
+          setStatus('success');
+          setMessage('Authentication successful! Redirecting...');
+
+          // Determine the redirect path based on user role
+          let redirectPath = '/';
+          if (user.role === 'student') {
+            redirectPath = '/student-dashboard';
+          } else if (user.role === 'teacher') {
+            redirectPath = '/teacher-dashboard';
+          } else if (user.role === 'coordinator') {
+            redirectPath = '/coordinator-dashboard';
+          }
+
+          // Redirect after a short delay
+          setTimeout(() => {
+            navigate(redirectPath);
+          }, 1500);
+        } else {
+          throw new Error('Failed to retrieve user data after authentication.');
+        }
         
       } catch (err: any) {
         setStatus('error')

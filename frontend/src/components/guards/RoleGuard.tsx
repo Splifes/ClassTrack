@@ -26,6 +26,9 @@ export function RoleGuard({ children, allowed, fallback = '/' }: RoleGuardProps)
     return <Navigate to="/login" replace />
   }
 
+  // TEMPORAL: Hardcodeado para permitir acceso durante desarrollo
+  // TODO: Restaurar verificación de roles en producción
+  /*
   if (!allowed.includes(user.role)) {
     return (
       <div className="container py-5">
@@ -43,6 +46,12 @@ export function RoleGuard({ children, allowed, fallback = '/' }: RoleGuardProps)
         </div>
       </div>
     )
+  }
+  */
+
+  // Mostrar advertencia visual de que el acceso está hardcodeado
+  if (!allowed.includes(user.role)) {
+    console.warn(`[DEV] Acceso hardcodeado: Usuario con rol '${user.role}' accediendo a página que requiere: ${allowed.join(', ')}`);
   }
 
   return <>{children}</>

@@ -1,0 +1,21 @@
+{
+  "name": "whatsapp-service",
+  "version": "1.0.0",
+  "description": "Microservice to handle WhatsApp notifications for ClassTrack",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [
+    "whatsapp",
+    "baileys",
+    "notifications"
+  ],
+  "author": "Cascade",
+  "license": "ISC",
+  "dependencies": {
+    "@whiskeysockets/baileys": "^7.0.0-rc.3",
+    "express": "^5.1.0",
+    "qrcode-terminal": "^0.12.0"
+  }
+}

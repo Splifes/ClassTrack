@@ -11,7 +11,7 @@ export function useAuth() {
     checkAuth()
   }, [])
 
-  const checkAuth = async () => {
+  const checkAuth = async (): Promise<User | null> => {
     try {
       setLoading(true)
       setError(null)
@@ -20,13 +20,15 @@ export function useAuth() {
       // Add role detection if not provided by backend
       const userWithRole: User = {
         ...userData,
-        role: userData.role || getUserRoleFromEmail(userData.email)
+        role: (userData.role || getUserRoleFromEmail(userData.email)) as UserRole
       }
       
       setUser(userWithRole)
+      return userWithRole
     } catch (err: any) {
       setError(err.message)
       setUser(null)
+      return null
     } finally {
       setLoading(false)
     }
@@ -34,11 +36,27 @@ export function useAuth() {
 
   const logout = async () => {
     try {
+      setLoading(true)
       await api.logout()
       setUser(null)
       setError(null)
+      
+      // Clear any cached data
+      localStorage.clear()
+      sessionStorage.clear()
+      
+      // Force page reload to clear all state
+      window.location.href = '/'
     } catch (err: any) {
-      setError(err.message)
+      console.error('Logout error:', err)
+      // Even if logout fails on server, clear local state
+      setUser(null)
+      setError(null)
+      localStorage.clear()
+      sessionStorage.clear()
+      window.location.href = '/'
+    } finally {
+      setLoading(false)
     }
   }
 

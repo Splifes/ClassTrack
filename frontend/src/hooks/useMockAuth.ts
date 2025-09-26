@@ -37,6 +37,10 @@ export function useMockAuth() {
   const logout = () => {
     setUser(null)
     localStorage.removeItem('mock-user-role')
+    localStorage.clear()
+    sessionStorage.clear()
+    // Force page reload to clear all state
+    window.location.href = '/'
   }
 
   const setRole = (role: UserRole) => {

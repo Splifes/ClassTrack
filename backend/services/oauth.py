@@ -13,7 +13,6 @@ class GoogleOAuthService:
             raise ValueError("Missing Google OAuth configuration. Check GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, GOOGLE_REDIRECT_URI")
     
     def get_auth_url(self, state: str = None) -> str:
-        """Generate Google OAuth authorization URL"""
         params = {
             'client_id': self.client_id,
             'redirect_uri': self.redirect_uri,
@@ -24,7 +23,12 @@ class GoogleOAuthService:
                 'profile',
                 'https://www.googleapis.com/auth/classroom.courses.readonly',
                 'https://www.googleapis.com/auth/classroom.rosters.readonly',
-                'https://www.googleapis.com/auth/classroom.student-submissions.students.readonly'
+                'https://www.googleapis.com/auth/classroom.student-submissions.students.readonly',
+                'https://www.googleapis.com/auth/classroom.coursework.students.readonly',
+                'https://www.googleapis.com/auth/classroom.coursework.me.readonly',
+                'https://www.googleapis.com/auth/classroom.announcements.readonly',
+                'https://www.googleapis.com/auth/classroom.courseworkmaterials.readonly',
+                'https://www.googleapis.com/auth/classroom.topics.readonly'
             ]),
             'access_type': 'offline',
             'prompt': 'consent'

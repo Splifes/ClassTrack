@@ -1,6 +1,7 @@
-from flask import Blueprint, jsonify, redirect, request, session, current_app
 from services.oauth import GoogleOAuthService
 import secrets
+
+from flask import Blueprint, jsonify, redirect, request, session, current_app
 
 bp = Blueprint('auth', __name__)
 
@@ -26,11 +27,11 @@ def auth_login():
             "message": str(e)
         }), 500
 
+
 @bp.get('/oauth/callback')
 def oauth_callback():
     """Handle OAuth callback from Google"""
     try:
-        # Verify state parameter
         state = request.args.get('state')
         if not state or state != session.get('oauth_state'):
             return jsonify({"error": "Invalid state parameter"}), 400
@@ -71,7 +72,7 @@ def oauth_callback():
             "message": str(e)
         }), 500
 
-@bp.get('/api/auth/logout')
+@bp.route('/api/auth/logout', methods=['GET', 'POST'])
 def auth_logout():
     """Clear user session"""
     session.clear()
